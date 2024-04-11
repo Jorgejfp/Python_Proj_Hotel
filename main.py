@@ -51,130 +51,58 @@
 # checked-out and he/she already paid for all services.
 # Look at next page to see some records in each table.
 
-import mysql.connector # type: ignore
+#crear menu con las opciones crear crear cliente, crear habitacion, crear reserva, check in, check out, salir
+def create_customer():
+    # Code to create a new customer
+    pass
 
-# Connect to the MySQL database
-cnx = mysql.connector.connect(
-    host="localhost",
-    user="your_username",
-    password="your_password",
-    database="Inn_reservation"
-)
+def create_room():
+    # Code to create a new room
+    pass
 
-# Create a cursor object to interact with the database
-cursor = cnx.cursor()
+def create_reservation():
+    # Code to create a new reservation
+    pass
 
-# Function to read reservation information from a file and save records in the database
-def reserve_room(file_path):
-    with open(file_path, 'r') as file:
-        for line in file:
-            # Parse the reservation information from the file
-            reservation_info = line.strip().split(',')
-            customer_id = int(reservation_info[0])
-            room_type = reservation_info[1]
-            accommodation_days = int(reservation_info[2])
-            cost = float(reservation_info[3])
-            
-            # Check if the room is available
-            cursor.execute("SELECT id FROM Inn_rooms WHERE room_type = %s AND availability > 0", (room_type,))
-            room = cursor.fetchone()
-            
-            if room:
-                room_id = room[0]
-                
-                # Insert the reservation into the database
-                cursor.execute("INSERT INTO Inn_reservation (room_type, customer_id, accommodation_days, cost, checkout) VALUES (%s, %s, %s, %s, 0)", (room_id, customer_id, accommodation_days, cost))
-                
-                # Update the availability of the room
-                cursor.execute("UPDATE Inn_rooms SET availability = availability - 1 WHERE id = %s", (room_id,))
-                
-                cnx.commit()
-                print("Reservation successfully made.")
-            else:
-                print("No available rooms of type", room_type)
-
-# Function to print customer accommodation information and free the room in the system
-def check_out(customer_id):
-    # Get the reservation information for the customer
-    cursor.execute("SELECT r.id, c.first_name, c.last_name, r.accommodation_days, r.cost FROM Inn_reservation r JOIN Inn_customer c ON r.customer_id = c.id WHERE r.customer_id = %s AND r.checkout = 0", (customer_id,))
-    reservation = cursor.fetchone()
-    
-    if reservation:
-        reservation_id, first_name, last_name, accommodation_days, cost = reservation
-        
-        # Print the accommodation information
-        print("Reservation ID:", reservation_id)
-        print("Customer Name:", first_name, last_name)
-        print("Accommodation Days:", accommodation_days)
-        print("Total Cost:", cost)
-        
-        # Update the checkout status in the database
-        cursor.execute("UPDATE Inn_reservation SET checkout = 1 WHERE id = %s", (reservation_id,))
-        
-        # Update the availability of the room
-        cursor.execute("UPDATE Inn_rooms SET availability = availability + 1 WHERE id = (SELECT room_type FROM Inn_reservation WHERE id = %s)", (reservation_id,))
-        
-        cnx.commit()
-        print("Check-out successful.")
-    else:
-        print("No active reservation found for customer ID", customer_id)
-
-# Function to check-in a new customer and save a new reservation in the database
 def check_in():
-    # Check if all rooms are full
-    cursor.execute("SELECT COUNT(*) FROM Inn_rooms WHERE availability > 0")
-    available_rooms = cursor.fetchone()[0]
-    
-    if available_rooms == 0:
-        print("All rooms are full. Check-in process is locked.")
-    else:
-        # Get customer information from the user
-        first_name = input("Enter customer's first name: ")
-        last_name = input("Enter customer's last name: ")
-        email = input("Enter customer's email: ")
-        phone_number = input("Enter customer's phone number: ")
-        
-        # Get the available room types
-        cursor.execute("SELECT DISTINCT room_type FROM Inn_rooms WHERE availability > 0")
-        room_types = cursor.fetchall()
-        
-        # Display the available room types to the user
-        print("Available room types:")
-        for room_type in room_types:
-            print(room_type[0])
-        
-        # Get the desired room type from the user
-        room_type = input("Enter desired room type: ")
-        
-        # Check if the desired room type is available
-        cursor.execute("SELECT id FROM Inn_rooms WHERE room_type = %s AND availability > 0", (room_type,))
-        room = cursor.fetchone()
-        
-        if room:
-            room_id = room[0]
-            
-            # Get the number of accommodation days from the user
-            accommodation_days = int(input("Enter number of accommodation days: "))
-            
-            # Calculate the cost based on the room type and accommodation days
-            cursor.execute("SELECT room_price FROM Inn_rooms WHERE id = %s", (room_id,))
-            room_price = cursor.fetchone()[0]
-            cost = room_price * accommodation_days
-            
-            # Insert the new reservation into the database
-            cursor.execute("INSERT INTO Inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)", (first_name, last_name, email, phone_number))
-            customer_id = cursor.lastrowid
-            
-            cursor.execute("INSERT INTO Inn_reservation (room_type, customer_id, accommodation_days, cost, checkout) VALUES (%s, %s, %s, %s, 0)", (room_id, customer_id, accommodation_days, cost))
-            
-            # Update the availability of the room
-            cursor.execute("UPDATE Inn_rooms SET availability = availability - 1 WHERE id = %s", (room_id,))
-            
-            cnx.commit()
-            print("Check-in successful.")
-        else:
-            print("No available rooms of type", room_type)
+    # Code to check in a customer
+    pass
 
-# Close the cursor and connection to the database
-cursor.close()
-cnx.close() 
+def check_out():
+    # Code to check out a customer
+    pass
+
+def main_menu():
+    while True:
+        print("Welcome to Pacific Inn Reservation System")
+        print("1. Create Customer")
+        print("2. Create Room")
+        print("3. Create Reservation")
+        print("4. Check In")
+        print("5. Check Out")
+        print("6. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            create_customer()
+        elif choice == "2":
+            create_room()
+        elif choice == "3":
+            create_reservation()
+        elif choice == "4":
+            check_in()
+        elif choice == "5":
+            check_out()
+        elif choice == "6":
+            print("Are you sure you want to exit? (Y/N)")
+            confirm = input("Enter your choice: ")
+            if confirm.lower() == "y":
+                print("Exiting...")
+                break
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main_menu()
