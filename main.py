@@ -36,7 +36,6 @@
 #     accommodation_days smallint
 #     cost decimal(5,2)
 #     checkout tinyint(1)
-# intendado actualizar
 
 # Inn_rooms table stores all room information.
 # Inn_customer table store costumer information.
