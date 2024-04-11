@@ -1,3 +1,5 @@
-import _mysql_connector
+import mysql.connector
 
-conexion = _mysql_connector.connect(user='root', password='root', host='3306'    )
+conexion = mysql.connector.connect(user='root', password='', host='localhost', database='inn_reservation', port='3306')
+
+print(conexion)
