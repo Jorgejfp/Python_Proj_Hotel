@@ -38,7 +38,6 @@
 #     checkout tinyint(1)
 # intendado actualizar
 
-
 # Inn_rooms table stores all room information.
 # Inn_customer table store costumer information.
 # Inn_reservation is the most important table.
@@ -53,7 +52,7 @@
 # checked-out and he/she already paid for all services.
 # Look at next page to see some records in each table.
 
-import mysql.connector
+import mysql.connector # type: ignore
 
 # Connect to the MySQL database
 cnx = mysql.connector.connect(
