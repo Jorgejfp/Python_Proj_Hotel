@@ -36,6 +36,7 @@
 #     accommodation_days smallint
 #     cost decimal(5,2)
 #     checkout tinyint(1)
+
 # Inn_rooms table stores all room information.
 # Inn_customer table store costumer information.
 # Inn_reservation is the most important table.
