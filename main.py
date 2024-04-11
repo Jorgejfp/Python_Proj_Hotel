@@ -74,7 +74,7 @@ def check_out():
 
 def main_menu():
     while True:
-        print("Welcome to Pacific Inn Reservation System")
+        print("Welcome to Pacific Inn Reservation System\n\n")
         print("1. Create Customer")
         print("2. Create Room")
         print("3. Create Reservation")
