@@ -51,7 +51,7 @@
 # checked-out and he/she already paid for all services.
 # Look at next page to see some records in each table.
 
-import mysql.connector
+import mysql.connector # type: ignore
 
 # Connect to the MySQL database
 cnx = mysql.connector.connect(
