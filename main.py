@@ -80,7 +80,7 @@ def main_menu():
         print("3. Create Reservation")
         print("4. Check In")
         print("5. Check Out")
-        print("6. Exit")
+        print("6. Exit\n\n")
         
         choice = input("Enter your choice: ")
         
