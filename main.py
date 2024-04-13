@@ -208,9 +208,6 @@ def create_customer():
     # Code to create a new customer
     pass
 
-
-
-
 def check_in():
     # Code to check in a customer
     pass
