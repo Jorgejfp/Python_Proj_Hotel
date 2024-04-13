@@ -117,7 +117,31 @@ def menu_room():
         else:
             print("Invalid choice. Please try again.")
             
-
+def menu_reservation():
+    while True:
+        print("Reservation Menu\n\n")
+        print("1. Create Reservation")
+        print("2. Update Reservation")
+        print("3. Delete Reservation")
+        print("4. List Reservations")
+        print("5. Back to Main Menu\n\n")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            create_reservation()
+        elif choice == "2":
+            update_reservation()
+        elif choice == "3":
+            delete_reservation()
+        elif choice == "4":
+            reservations = inn_reservation.Reservation.list_reservations()
+            for reservation in reservations:
+                print(reservation)
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main_menu()
