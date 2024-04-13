@@ -1,6 +1,5 @@
-from pkt.connection import connectDB
-
 import mysql.connector
+from pkt.connection import connectDB
 
 class Customer:
     def __init__(self, first_name, last_name, email, phone_number):
@@ -75,31 +74,41 @@ class Customer:
 
         print("Customer data deleted successfully!")
         
-    
+
     def list_customers():
-        # Connect to the MySQL database
-        db = connectDB()
-        # Create a cursor object to execute SQL queries
-        cursor = db.cursor()
+        try:
+            # Connect to the MySQL database
+            db = mysql.connector.connect(user='root', password='', host='localhost', database='inn_reservation', port='3306')
+            print("Connection to the database successful!")
 
-        # Prepare the SQL query to select all customers from the table
-        query = "SELECT * FROM inn_customer"
+            # Create a cursor object to execute SQL queries
+            cursor = db.cursor()
 
-        # Execute the SQL query
-        cursor.execute(query)
+            # Prepare the SQL query to select all customers from the table
+            query = "SELECT * FROM inn_customer"
 
-        # Fetch all the rows returned by the query
-        rows = cursor.fetchall()
+            # Execute the SQL query
+            cursor.execute(query)
 
-        # Print the customer data
-        #for row in rows:
-        #    print("ID:", row[0])
-        #    print("First Name:", row[1])
-        #    print("Last Name:", row[2])
-        #    print("Email:", row[3])
-        #    print("Phone Number:", row[4])
-        #    print("--------------------")
+            # Fetch all the rows returned by the query
+            rows = cursor.fetchall()
 
-        # Close the cursor and database connection
-        cursor.close()
-        db.close()
+            # Print the customer data
+            if rows:
+                print("ID\tFirst Name\tLast Name\tEmail\t\t\tPhone Number")
+                print("-" * 80)
+                for row in rows:
+                    print(f"{row[0]}\t{row[1]}\t\t{row[2]}\t\t{row[3]}\t{row[4]}")
+                print("-" * 80)
+            else:
+                print("No customers found.")
+
+        except mysql.connector.Error as err:
+            print("Error:", err)
+
+        finally:
+            # Close the cursor and database connection
+            if 'cursor' in locals():
+                cursor.close()
+            if 'db' in locals() and db.is_connected():
+                db.close()
