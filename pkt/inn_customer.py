@@ -93,22 +93,13 @@ class Customer:
             # Fetch all the rows returned by the query
             rows = cursor.fetchall()
 
-            # Print the customer data
-            if rows:
-                print("ID\tFirst Name\tLast Name\tEmail\t\t\tPhone Number")
-                print("-" * 80)
-                for row in rows:
-                    print(f"{row[0]}\t{row[1]}\t\t{row[2]}\t\t{row[3]}\t{row[4]}")
-                print("-" * 80)
-            else:
-                print("No customers found.")
+            # Close the cursor and database connection
+            cursor.close()
+            db.close()
+
+            # Return the fetched rows
+            return rows
 
         except mysql.connector.Error as err:
             print("Error:", err)
-
-        finally:
-            # Close the cursor and database connection
-            if 'cursor' in locals():
-                cursor.close()
-            if 'db' in locals() and db.is_connected():
-                db.close()
+            return []
