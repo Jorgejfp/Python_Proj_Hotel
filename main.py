@@ -155,9 +155,6 @@ def create_customer():
 
 
 
-def create_reservation():
-    # Code to create a new reservation
-    pass
 
 def check_in():
     # Code to check in a customer
