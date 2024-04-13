@@ -1,4 +1,40 @@
 from pkt import inn_customer, inn_room, inn_reservation
+from pkt.inn_customer import Customer
+from pkt.inn_room import Room
+from pkt.inn_reservation import Reservation
+
+try:
+    with open("reservation_file.txt", "r") as f1:
+        reservations = []
+
+        for line in f1.readlines():
+            data = line.strip().split(",")
+            reservation_duration = data[5]  # Suponiendo que la duración de la reserva está en la última posición de los datos
+
+            # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
+            customer = Customer(data[0], data[1], data[2], data[3])
+            # Crear un nuevo objeto Room con el tipo de habitación de la línea posicion 4
+            room = Room(data[4])
+            room_id = room.get_room_id()
+            
+            # y luego recuperar las claves primarias generadas automáticamente
+
+            # Supongamos que obtienes las claves primarias customer_id y room_id
+            customer_id = 1  # Ejemplo: clave primaria de customer
+            room_id = 1      # Ejemplo: clave primaria de room
+
+            # Creamos un nuevo objeto Reservation con las claves externas correctas
+            reservation = Reservation(customer_id, room_id, reservation_duration)
+            reservations.append(reservation)
+
+    # Imprimir las reservaciones
+    for reservation in reservations:
+        print(reservation)
+
+except FileNotFoundError:
+    print("El archivo reservation_file.txt no se ha encontrado.")
+except Exception as e:
+    print(f"Se produjo un error: {e}")
 
 def main_menu():
     while True:

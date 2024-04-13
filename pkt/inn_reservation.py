@@ -2,7 +2,7 @@ import mysql.connector
 from pkt.connection import connectDB
 
 
-class inn_reservation:
+class Reservation:
     def __init__(self, room_type, customer_id, accommodation_days, cost, checkout):
         self.id = None
         self.room_type = room_type
@@ -41,7 +41,7 @@ class inn_reservation:
             reservation_id = input("Enter reservation ID: ")
 
             # Find the existing reservation
-            reservation = inn_reservation.find(reservation_id)
+            reservation = Reservation.find(reservation_id)
 
             if reservation:
                 # Update the checkout status of the reservation
@@ -59,7 +59,7 @@ class inn_reservation:
             reservation_id = input("Enter reservation ID: ")
 
             # Find the existing reservation
-            reservation = inn_reservation.find(reservation_id)
+            reservation = Reservation.find(reservation_id)
 
             if reservation:
                 # Update the check-out status of the reservation
@@ -83,7 +83,7 @@ class inn_reservation:
                 checkout = input("Enter checkout date: ")
 
                 # Create a new reservation object
-                reservation = inn_reservation(room_type, customer_id, accommodation_days, cost, checkout)
+                reservation = Reservation(room_type, customer_id, accommodation_days, cost, checkout)
 
                 # Save the reservation to the database
                 reservation.save_dbReservation()
@@ -104,7 +104,7 @@ class inn_reservation:
                 checkout = input("Enter checkout date: ")
 
                 # Create a new reservation object
-                reservation = inn_reservation(room_type, customer_id, accommodation_days, cost, checkout)
+                reservation = Reservation(room_type, customer_id, accommodation_days, cost, checkout)
 
                 # Update the reservation in the database
                 reservation.update_dbReservation()
@@ -121,7 +121,7 @@ class inn_reservation:
                 reservation_id = input("Enter reservation ID: ")
 
                 # Create a new reservation object
-                reservation = inn_reservation(None, None, None, None, None)
+                reservation = Reservation(None, None, None, None, None)
                 reservation.id = reservation_id
 
                 # Delete the reservation from the database
