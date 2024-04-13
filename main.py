@@ -2,6 +2,7 @@ from pkt import inn_customer, inn_room, inn_reservation
 from pkt.inn_customer import Customer
 from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
+from pkt.connection import connectDB
 
 try:
     with open("reservation_file.txt", "r") as f1:
@@ -13,11 +14,13 @@ try:
 
             # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
             customer = Customer(data[0], data[1], data[2], data[3])
-            # Crear un nuevo objeto Room con el tipo de habitación de la línea posicion 4
-            room = Room(data[4])
-            room_id = room.get_room_id()
+            
+            # buscar el ID asociado al tipo de habitacion
+            room_id = Room.getID(data[4])
+           
             
             # y luego recuperar las claves primarias generadas automáticamente
+            
 
             # Supongamos que obtienes las claves primarias customer_id y room_id
             customer_id = 1  # Ejemplo: clave primaria de customer

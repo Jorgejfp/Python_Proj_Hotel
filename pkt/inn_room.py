@@ -7,9 +7,35 @@ class Room:
             self.room_type = room_type
             self.room_price = room_price
             self.room_availability = availability
+     
             
-            
-            
+   
+    def getID(self, room_type):
+        try:
+            # Connect to the database
+            connRoomDB = connectDB()
+
+            # Create a cursor object to execute SQL queries
+            cursor = connRoomDB.cursor()
+
+            # Prepare the SQL query to retrieve the ID of a room based on room_type
+            query = "SELECT id FROM inn_rooms WHERE room_type = %s"
+            values = (room_type,)
+
+            # Execute the query
+            cursor.execute(query, values)
+
+            # Fetch the result
+            room_id = cursor.fetchone()[0]
+
+            # Close the cursor and connection
+            cursor.close()
+
+            return room_id
+        except mysql.connector.Error as error:
+            print(f"Failed to get room ID: {error}")
+            return None
+    
     def list_rooms():   
             try:
                 # Connect to the database

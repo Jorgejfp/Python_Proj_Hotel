@@ -8,6 +8,39 @@ class Customer:
         self.email = email
         self.phone_number = phone_number       
         
+    def get_customer_by_id(self, phone_number): 
+        try:
+            # Connect to the MySQL database
+            connCustomerDB = connectDB()
+            # Create a cursor object to execute SQL queries
+            cursor = connCustomerDB.cursor()
+
+            # Prepare the SQL query to select a customer by phone number
+            query = "SELECT * FROM inn_customer WHERE phone_number = %s"
+            values = (phone_number,)
+
+            # Execute the SQL query
+            cursor.execute(query, values)
+
+            # Fetch the customer data
+            customer_data = cursor.fetchone()
+
+            # Close the cursor and database connection
+            cursor.close()
+           
+
+            # If the customer data is found, create a Customer object and return it
+            if customer_data:
+                customer = Customer(customer_data[1], customer_data[2], customer_data[3], customer_data[4])
+                customer.id = customer_data[0]
+                return customer
+            else:
+                return None
+
+        except mysql.connector.Error as err:
+            print("Error:", err)
+            return None
+        
     
     def save_to_dbCustomer(self):
         # Connect to the MySQL database
