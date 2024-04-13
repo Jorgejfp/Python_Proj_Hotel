@@ -1,4 +1,99 @@
-from pkt import inn_customer
+from pkt import inn_customer, inn_room, inn_reservation
+
+
+
+
+def main_menu():
+    while True:
+        print("\n\nWelcome to Pacific Inn Reservation System\n\n")
+        print("1. Menu Customer")
+        print("2. Menu Room")
+        print("3. Menu Reservation")
+        print("4. Check In")
+        print("5. Check Out")
+        print("6. Exit\n\n")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            menu_customers()
+        elif choice == "2":
+            menu_room()
+        elif choice == "3":
+            menu_reservation()
+        elif choice == "4":
+            check_in()
+        elif choice == "5":
+            check_out()
+        elif choice == "6":
+            print("Are you sure you want to exit? (Y/N)")
+            confirm = input("Enter your choice: ")
+            if confirm.lower() == "y":
+                print("Exiting...")
+                break
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+        
+
+#frm_customer = form customer
+def menu_customers():
+    while True:
+        print("Customer Menu\n\n")
+        print("1. Create Customer")
+        print("2. Update Customer")
+        print("3. Delete Customer")
+        print("4. List Customers")
+        print("5. Back to Main Menu\n\n")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            create_customer()
+        elif choice == "2":
+            update_customer()
+        elif choice == "3":
+            delete_customer()
+        elif choice == "4":
+            customers = inn_customer.Customer.list_customers()
+            for customer in customers:
+                print(customer)
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+def menu_room():
+    while True:
+        print("Room Menu\n\n")
+        print("1. List Rooms")
+        print("2. check availability")
+        print("3. Back to Main Menu\n\n")
+                   
+        choice = input("Enter your choice: ")
+                    
+        if choice == "1":
+            rooms = inn_room.Room.list_rooms()
+            for room in rooms:
+                print(room)
+        elif choice == "2":
+            room_type = input("Enter room type: \n\n" "S: Standard\n" "P: Premium\n" "O: Ocean View\n" "E: Economy\n\n")
+            availability = inn_room.Room.check_availability(room_type)
+            print(f"Availability of {room_type} rooms: {availability}")
+        elif choice == "3":
+            break               
+        else:
+            print("Invalid choice. Please try again.")
+            
+
+
+if __name__ == "__main__":
+    main_menu()
+
+
+# Rest of the code...
+
 
 #There is a small local Inn near to the ocean named Pacific Inn that offers accommodation services to the customers. They need a reservation system to handle their business. You as 
 # A developer is responsible to create a project based on Pacific Inn requirements.
@@ -58,9 +153,7 @@ def create_customer():
     # Code to create a new customer
     pass
 
-def create_room():
-    # Code to create a new room
-    pass
+
 
 def create_reservation():
     # Code to create a new reservation
@@ -117,67 +210,3 @@ def delete_customer():
     print("Customer deleted successfully!")
     pass
 
-#frm_customer = form customer
-def menu_customers():
-    while True:
-        print("Customer Menu\n\n")
-        print("1. Create Customer")
-        print("2. Update Customer")
-        print("3. Delete Customer")
-        print("4. List Customers")
-        print("5. Back to Main Menu\n\n")
-        
-        choice = input("Enter your choice: ")
-        
-        if choice == "1":
-            create_customer()
-        elif choice == "2":
-            update_customer()
-        elif choice == "3":
-            delete_customer()
-        elif choice == "4":
-            customers = inn_customer.Customer.list_customers()
-            for customer in customers:
-                print(customer)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-
-def main_menu():
-    while True:
-        print("\n\nWelcome to Pacific Inn Reservation System\n\n")
-        print("1. Menu Customer")
-        print("2. Menu Room")
-        print("3. Menu Reservation")
-        print("4. Check In")
-        print("5. Check Out")
-        print("6. Exit\n\n")
-        
-        choice = input("Enter your choice: ")
-        
-        if choice == "1":
-            menu_customers()
-        elif choice == "2":
-            menu_room()
-        elif choice == "3":
-            menu_reservation()
-        elif choice == "4":
-            check_in()
-        elif choice == "5":
-            check_out()
-        elif choice == "6":
-            print("Are you sure you want to exit? (Y/N)")
-            confirm = input("Enter your choice: ")
-            if confirm.lower() == "y":
-                print("Exiting...")
-                break
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-        
-if __name__ == "__main__":
-    main_menu()
-    
