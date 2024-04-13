@@ -1,3 +1,5 @@
+import pkt.inn_customer
+
 #There is a small local Inn near to the ocean named Pacific Inn that offers accommodation services to the customers. They need a reservation system to handle their business. You as 
 # A developer is responsible to create a project based on Pacific Inn requirements.
 # First, Pacific Inn has 4 types of rooms:
@@ -72,6 +74,82 @@ def check_out():
     # Code to check out a customer
     pass
 
+def create_customer():
+    # Code to create a new customer
+    first_name = input("Enter customer's first name: ")
+    last_name = input("Enter customer's last name: ")
+    email = input("Enter customer's email: ")
+    phone_number = input("Enter customer's phone number: ")
+    
+    # Create a new customer object
+    customer = inn_customer.Customer(first_name, last_name, email, phone_number)
+    
+    # Save the customer to the database
+    customer.save()
+    
+    print("Customer created successfully!")
+    pass
+
+def update_customer():
+    # Code to update an existing customer
+    customer_id = input("Enter customer ID: ")
+    first_name = input("Enter updated first name: ")
+    last_name = input("Enter updated last name: ")
+    email = input("Enter updated email: ")
+    phone_number = input("Enter updated phone number: ")
+
+    # Retrieve the customer from the database using the customer_id
+    customer = inn_customer.Customer.get_customer_by_id(customer_id)
+
+    # Update the customer's information
+    customer.update(first_name, last_name, email, phone_number)
+
+    print("Customer updated successfully!")
+    pass
+
+def delete_customer():
+    # Code to delete a customer
+    customer_id = input("Enter customer ID: ")
+    # Retrieve the customer from the database using the customer_id
+    customer = inn_customer.Customer.get_customer_by_id(customer_id)
+    # Delete the customer from the database
+    customer.delete()
+    print("Customer deleted successfully!")
+    pass
+
+def list_customers():
+    # Code to list all customers
+    customers = inn_customer.Customer.get_all_customers()
+    for customer in customers:
+        print(customer)
+    pass
+
+#frm_customer = form customer
+def menu_customers():
+    while True:
+        print("Customer Menu\n\n")
+        print("1. Create Customer")
+        print("2. Update Customer")
+        print("3. Delete Customer")
+        print("4. List Customers")
+        print("5. Back to Main Menu\n\n")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            create_customer()
+        elif choice == "2":
+            update_customer()
+        elif choice == "3":
+            delete_customer()
+        elif choice == "4":
+            list_customers()
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
 def main_menu():
     while True:
         print("Welcome to Pacific Inn Reservation System\n\n")
@@ -85,11 +163,11 @@ def main_menu():
         choice = input("Enter your choice: ")
         
         if choice == "1":
-            create_customer()
+            menu_customers()
         elif choice == "2":
-            create_room()
+            menu_room()
         elif choice == "3":
-            create_reservation()
+            menu_reservation()
         elif choice == "4":
             check_in()
         elif choice == "5":
@@ -104,7 +182,7 @@ def main_menu():
         else:
             print("Invalid choice. Please try again.")
 
+        
 if __name__ == "__main__":
     main_menu()
-    
     
