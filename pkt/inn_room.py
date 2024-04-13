@@ -27,9 +27,9 @@ class Room:
                 # Fetch all the results
                 rooms = cursor.fetchall()
 
-                # Display the results
-                # for room in rooms:
-                #    print(room)
+                #Display the results
+                for room in rooms:
+                    print(room)
 
                 # Close the cursor and connection
                 cursor.close()
