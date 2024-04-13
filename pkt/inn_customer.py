@@ -79,7 +79,7 @@ class Customer:
     def list_customers():
         try:
             # Connect to the MySQL database
-            db = mysql.connector.connect(user='root', password='', host='localhost', database='inn_reservation', port='3306')
+            db = connectDB
             print("Connection to the database successful!")
 
             # Create a cursor object to execute SQL queries

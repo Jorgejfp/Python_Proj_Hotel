@@ -13,7 +13,7 @@ class Room:
     def list_rooms():   
             try:
                 # Connect to the database
-                connection = connectDB()
+                connection = connectDB
 
                 # Create a cursor object to execute SQL queries
                 cursor = connection.cursor()
@@ -28,15 +28,18 @@ class Room:
                 rooms = cursor.fetchall()
 
                 # Display the results
-                for room in rooms:
-                    print(room)
+                # for room in rooms:
+                #    print(room)
 
                 # Close the cursor and connection
                 cursor.close()
                 connection.close()
+                
+                return rooms
+            
             except mysql.connector.Error as error:
                 print(f"Failed to list rooms: {error}")
-                
+                return []
     
             
     def decrease_availability(self):
