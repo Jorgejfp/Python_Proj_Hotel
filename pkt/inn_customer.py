@@ -6,8 +6,9 @@ class Customer:
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.phone_number = phone_number
-
+        self.phone_number = phone_number       
+        
+    
     def save_to_dbCustomer(self):
         # Connect to the MySQL database
         db = connectDB()
