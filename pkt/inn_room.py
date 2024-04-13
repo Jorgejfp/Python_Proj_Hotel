@@ -13,10 +13,10 @@ class Room:
     def list_rooms():   
             try:
                 # Connect to the database
-                connection = connectDB
+                connRoomDB = connectDB
 
                 # Create a cursor object to execute SQL queries
-                cursor = connection.cursor()
+                cursor = connRoomDB.cursor()
 
                 # Prepare the SQL query to retrieve all rooms
                 query = "SELECT * FROM inn_rooms"
@@ -33,7 +33,7 @@ class Room:
 
                 # Close the cursor and connection
                 cursor.close()
-                connection.close()
+           
                 
                 return rooms
             
@@ -45,10 +45,10 @@ class Room:
     def decrease_availability(self):
         try:
                     # Connect to the database
-                    connection = connectDB()
+                    connRoomDB = connectDB()
 
                     # Create a cursor object to execute SQL queries
-                    cursor = connection.cursor()
+                    cursor = connRoomDB.cursor()
 
                     # Prepare the SQL query to decrease the availability of a room
                     query = "UPDATE rooms SET room_availability = room_availability - 1 WHERE id = %s"
@@ -58,11 +58,11 @@ class Room:
                     cursor.execute(query, values)
 
                     # Commit the changes to the database
-                    connection.commit()
+                    connRoomDB.commit()
 
                     # Close the cursor and connection
                     cursor.close()
-                    connection.close()
+                  
 
                     print("Room availability decreased successfully!")
         except mysql.connector.Error as error:
@@ -71,10 +71,10 @@ class Room:
     def increase_availability(self):
         try:
                     # Connect to the database
-                    connection = connectDB()
+                    connRoomDB = connectDB()
 
                     # Create a cursor object to execute SQL queries
-                    cursor = connection.cursor()
+                    cursor = connRoomDB.cursor()
 
                     # Prepare the SQL query to increase the availability of a room
                     query = "UPDATE rooms SET room_availability = room_availability + 1 WHERE id = %s"
@@ -84,11 +84,11 @@ class Room:
                     cursor.execute(query, values)
 
                     # Commit the changes to the database
-                    connection.commit()
+                    connRoomDB.commit()
 
                     # Close the cursor and connection
                     cursor.close()
-                    connection.close()
+                
 
                     print("Room availability increased successfully!")
         except mysql.connector.Error as error:
@@ -97,10 +97,10 @@ class Room:
     def get_total_available_rooms():
         try:
             # Connect to the database
-            connection = connectDB()
+            connRoomDB = connectDB()
 
             # Create a cursor object to execute SQL queries
-            cursor = connection.cursor()
+            cursor = connRoomDB.cursor()
 
             # Prepare the SQL query to retrieve the total available rooms
             query = "SELECT COUNT(*) FROM rooms WHERE room_availability > 0"
@@ -113,7 +113,7 @@ class Room:
 
             # Close the cursor and connection
             cursor.close()
-            connection.close()
+          
 
             return total_available_rooms
         except mysql.connector.Error as error:
@@ -123,10 +123,10 @@ class Room:
     def check_availability(self):
             try:
                 # Connect to the database
-                connection = connectDB()
+                connRoomDB = connectDB()
 
                 # Create a cursor object to execute SQL queries
-                cursor = connection.cursor()
+                cursor = connRoomDB.cursor()
 
                 # Prepare the SQL query to check the availability of a room based on room_type
                 query = "SELECT room_availability FROM rooms WHERE room_type = %s"
@@ -140,7 +140,7 @@ class Room:
 
                 # Close the cursor and connection
                 cursor.close()
-                connection.close()
+           
 
                 if availability:
                     return availability[0] > 0
