@@ -11,7 +11,12 @@ try:
             data = line.strip().split(",")
             reservation_duration = data[5]  # Suponiendo que la duración de la reserva está en la última posición de los datos
 
-            # Aquí deberías insertar los datos de customer y room en la base de datos
+            # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
+            customer = Customer(data[0], data[1], data[2], data[3])
+            # Crear un nuevo objeto Room con el tipo de habitación de la línea posicion 4
+            room = Room(data[4])
+            room_id = room.get_room_id()
+            
             # y luego recuperar las claves primarias generadas automáticamente
 
             # Supongamos que obtienes las claves primarias customer_id y room_id
