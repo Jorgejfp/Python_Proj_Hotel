@@ -11,9 +11,9 @@ class Customer:
     
     def save_to_dbCustomer(self):
         # Connect to the MySQL database
-        db = connectDB()
+        connCustomerDB = connectDB()
         # Create a cursor object to execute SQL queries
-        cursor = db.cursor()
+        cursor = connCustomerDB.cursor()
 
         # Prepare the SQL query to insert customer data into the table
         query = "INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)"
@@ -23,19 +23,19 @@ class Customer:
         cursor.execute(query, values)
 
         # Commit the changes to the database
-        db.commit()
+        connCustomerDB.commit()
 
         # Close the cursor and database connection
         cursor.close()
-        db.close()
+    
         
         print("Customer data saved successfully!")
         
     def update_in_dbCustomer(self):
         # Connect to the MySQL database
-        db = connectDB()
+        connCustomerDB = connectDB()
         # Create a cursor object to execute SQL queries
-        cursor = db.cursor()
+        cursor = connCustomerDB.cursor()
 
         # Prepare the SQL query to update customer data in the table
         query = "UPDATE inn_customer SET first_name = %s, last_name = %s, email = %s, phone_number = %s WHERE id = %s"
@@ -45,19 +45,19 @@ class Customer:
         cursor.execute(query, values)
 
         # Commit the changes to the database
-        db.commit()
+        connCustomerDB.commit()
 
         # Close the cursor and database connection
         cursor.close()
-        db.close()
+       
 
         print("Customer data updated successfully!")
         
     def delete_from_dbCustomer(self):
         # Connect to the MySQL database
-        db = connectDB()
+        connCustomerDB = connectDB()
         # Create a cursor object to execute SQL queries
-        cursor = db.cursor()
+        cursor = connCustomerDB.cursor()
 
         # Prepare the SQL query to delete customer data from the table
         query = "DELETE FROM inn_customer WHERE id = %s"
@@ -67,11 +67,11 @@ class Customer:
         cursor.execute(query, values)
 
         # Commit the changes to the database
-        db.commit()
+        connCustomerDB.commit()
 
         # Close the cursor and database connection
         cursor.close()
-        db.close()
+      
 
         print("Customer data deleted successfully!")
         
@@ -79,11 +79,11 @@ class Customer:
     def list_customers():
         try:
             # Connect to the MySQL database
-            db = connectDB
+            connCustomerDB = connectDB
             print("Connection to the database successful!")
 
             # Create a cursor object to execute SQL queries
-            cursor = db.cursor()
+            cursor = connCustomerDB.cursor()
 
             # Prepare the SQL query to select all customers from the table
             query = "SELECT * FROM inn_customer"
@@ -96,7 +96,7 @@ class Customer:
 
             # Close the cursor and database connection
             cursor.close()
-            db.close()
+       
 
             # Return the fetched rows
             return rows
