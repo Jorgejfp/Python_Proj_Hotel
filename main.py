@@ -117,13 +117,6 @@ def delete_customer():
     print("Customer deleted successfully!")
     pass
 
-def list_customers():
-    # Code to list all customers
-    customers = inn_customer.Customer.list_customers()
-    for customer in customers:
-        print(customer)
-    pass
-
 #frm_customer = form customer
 def menu_customers():
     while True:
@@ -143,7 +136,9 @@ def menu_customers():
         elif choice == "3":
             delete_customer()
         elif choice == "4":
-            list_customers()
+            customers = inn_customer.Customer.list_customers()
+            for customer in customers:
+                print(customer)
         elif choice == "5":
             break
         else:
