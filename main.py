@@ -1,8 +1,5 @@
 from pkt import inn_customer, inn_room, inn_reservation
 
-
-
-
 def main_menu():
     while True:
         print("\n\nWelcome to Pacific Inn Reservation System\n\n")
@@ -69,10 +66,8 @@ def menu_room():
         print("Room Menu\n\n")
         print("1. List Rooms")
         print("2. check availability")
-        print("3. Back to Main Menu\n\n")
-                   
+        print("3. Back to Main Menu\n\n")               
         choice = input("Enter your choice: ")
-                    
         if choice == "1":
             rooms = inn_room.Room.list_rooms()
             for room in rooms:
