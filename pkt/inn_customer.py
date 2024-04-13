@@ -1,4 +1,4 @@
-from connection import connectDB
+from pkt.connection import connectDB
 
 import mysql.connector
 
@@ -92,13 +92,13 @@ class Customer:
         rows = cursor.fetchall()
 
         # Print the customer data
-        for row in rows:
-            print("ID:", row[0])
-            print("First Name:", row[1])
-            print("Last Name:", row[2])
-            print("Email:", row[3])
-            print("Phone Number:", row[4])
-            print("--------------------")
+        #for row in rows:
+        #    print("ID:", row[0])
+        #    print("First Name:", row[1])
+        #    print("Last Name:", row[2])
+        #    print("Email:", row[3])
+        #    print("Phone Number:", row[4])
+        #    print("--------------------")
 
         # Close the cursor and database connection
         cursor.close()

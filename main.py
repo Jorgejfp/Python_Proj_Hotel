@@ -1,4 +1,4 @@
-import pkt.inn_customer
+from pkt import inn_customer
 
 #There is a small local Inn near to the ocean named Pacific Inn that offers accommodation services to the customers. They need a reservation system to handle their business. You as 
 # A developer is responsible to create a project based on Pacific Inn requirements.
@@ -119,7 +119,7 @@ def delete_customer():
 
 def list_customers():
     # Code to list all customers
-    customers = inn_customer.Customer.get_all_customers()
+    customers = inn_customer.Customer.list_customers()
     for customer in customers:
         print(customer)
     pass
@@ -152,10 +152,10 @@ def menu_customers():
 
 def main_menu():
     while True:
-        print("Welcome to Pacific Inn Reservation System\n\n")
-        print("1. Create Customer")
-        print("2. Create Room")
-        print("3. Create Reservation")
+        print("\n\nWelcome to Pacific Inn Reservation System\n\n")
+        print("1. Menu Customer")
+        print("2. Menu Room")
+        print("3. Menu Reservation")
         print("4. Check In")
         print("5. Check Out")
         print("6. Exit\n\n")
