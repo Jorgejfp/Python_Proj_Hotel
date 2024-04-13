@@ -1,5 +1,23 @@
 from pkt import inn_customer, inn_room, inn_reservation
+from pkt.inn_customer import Customer
 
+ ###read the file
+f1 = open("./reservation_file.txt","r")
+    ##print(f1.readlines())
+title = True
+LC=[]
+for p in f1.readlines():
+        if (title ==True): ##avoid the titles
+            title = False
+            continue
+        else:
+            v = p.split(",")
+            C = Customer(v[0],v[1],v[2],v[3],v[4],v[5])
+            LC.append(C)
+            del C
+
+f1.close()
+   
 
 
 

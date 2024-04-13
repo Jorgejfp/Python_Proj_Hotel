@@ -8,6 +8,8 @@ class Room:
             self.room_price = room_price
             self.room_availability = availability
             
+            
+            
             def list_rooms():   
                     try:
                         # Connect to the database
@@ -113,3 +115,37 @@ class Room:
                     return total_available_rooms
                 except mysql.connector.Error as error:
                     print(f"Failed to get total available rooms: {error}")
+                    
+           
+            def check_availability(self):
+                    try:
+                        # Connect to the database
+                        connection = connectDB()
+
+                        # Create a cursor object to execute SQL queries
+                        cursor = connection.cursor()
+
+                        # Prepare the SQL query to check the availability of a room based on room_type
+                        query = "SELECT room_availability FROM rooms WHERE room_type = %s"
+                        values = (self.room_type,)
+
+                        # Execute the query
+                        cursor.execute(query, values)
+
+                        # Fetch the result
+                        availability = cursor.fetchone()
+
+                        # Close the cursor and connection
+                        cursor.close()
+                        connection.close()
+
+                        if availability:
+                            return availability[0] > 0
+                        else:
+                            return False
+                    except mysql.connector.Error as error:
+                        print(f"Failed to check room availability: {error}")
+                        return False
+                
+                    
+           
