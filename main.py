@@ -20,12 +20,10 @@ try:
            
             
             # y luego recuperar las claves primarias generadas automáticamente
+            customer_id = customer.getCostumerId(data[3])
             
-
-            # Supongamos que obtienes las claves primarias customer_id y room_id
-            customer_id = 1  # Ejemplo: clave primaria de customer
-            room_id = 1      # Ejemplo: clave primaria de room
-
+            # tenemos las claves primarias customer_id y room_id
+         
             # Creamos un nuevo objeto Reservation con las claves externas correctas
             reservation = Reservation(customer_id, room_id, reservation_duration)
             reservations.append(reservation)

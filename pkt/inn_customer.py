@@ -8,7 +8,7 @@ class Customer:
         self.email = email
         self.phone_number = phone_number       
         
-    def get_customer_by_id(self, phone_number): 
+    def getCostumerId(self, phone_number): 
         try:
             # Connect to the MySQL database
             connCustomerDB = connectDB()
