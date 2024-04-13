@@ -130,7 +130,7 @@ class inn_reservation:
                 print("Reservation deleted successfully!")
             except Exception as error:
                 print(f"Failed to delete reservation: {error}")
-              
+            
     def list_reservations():
         try:
             # Connect to the database
