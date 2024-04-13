@@ -19,7 +19,7 @@ class Room:
                 cursor = connection.cursor()
 
                 # Prepare the SQL query to retrieve all rooms
-                query = "SELECT * FROM rooms"
+                query = "SELECT * FROM inn_rooms"
 
                 # Execute the query
                 cursor.execute(query)
