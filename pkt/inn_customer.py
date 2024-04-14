@@ -53,7 +53,7 @@ class Customer:
         # Close the cursor and database connection
         cursor.close()
         print("Customer data updated successfully!")
-    
+    '''
     def delete_customer(customer_id, cursor, connection):
         
         try:
@@ -70,7 +70,7 @@ class Customer:
             connection.rollback()  # Rollback the changes if an error occurs finally:
         finally:
             cursor.close()
-            
+    '''        
     def list_customers():
         # Connect to the MySQL database
         connCustomerDB = connectDB()
@@ -108,7 +108,7 @@ class Customer:
                 
                 
     def delete_customer_by_id(customer_id):
-    # Connect to the database
+        # Connect to the database
         connCustomerDB = connectDB()
         cursor = None
 
@@ -117,14 +117,16 @@ class Customer:
                 cursor = connCustomerDB.cursor()
 
                 # Check if the customer ID exists in the database
-                query = "SELECT * FROM inn_customer WHERE id = %s"
+                query = "SELECT first_name, last_name, email, phone_number FROM inn_customer WHERE id = %s"
                 cursor.execute(query, (customer_id,))
-                customer = cursor.fetchone()
+                customer_data = cursor.fetchone()
 
-                if customer is not None:
-                    # Customer exists, proceed with deletion
-                    customer.delete_customer()
-                    #delete_customer(customer_id, cursor, connCustomerDB)
+                if customer_data is not None:
+                    # Delete the customer directly using the fetched customer ID
+                    query_delete = "DELETE FROM inn_customer WHERE id = %s"
+                    cursor.execute(query_delete, (customer_id,))
+                    connCustomerDB.commit()
+                    print("Customer with ID {} deleted successfully!".format(customer_id))
                 else:
                     print("Customer with ID {} does not exist.".format(customer_id))
             else:
@@ -137,8 +139,9 @@ class Customer:
             if cursor is not None:
                 cursor.close()
             if connCustomerDB is not None:
-                connCustomerDB.close()              
-    
+                connCustomerDB.close()
+
+
     
 '''       
     def delete_from_dbCustomer(self):       
