@@ -89,7 +89,7 @@ def main_menu():
 #frm_customer = form customer
 def menu_customers():
     while True:
-        print("Customer Menu\n\n")
+        print("\n\nCustomer Menu\n\n")
         print("1. Create Customer")
         print("2. Update Customer")
         print("3. Delete Customer")
@@ -105,12 +105,6 @@ def menu_customers():
         elif choice == "3":
             customer_id = int(input("Enter the ID of the customer you want to delete: "))         
             customerDelete = inn_customer.Customer.delete_customer_by_id(customer_id)     
-            if customerDelete:
-                customerDelete.delete_customer()
-                print("Customer deleted successfully!")
-            else:
-                print("Customer not found.")      
-            
         elif choice == "4":
             customers = inn_customer.Customer.list_customers()         
         elif choice == "5":
@@ -212,15 +206,3 @@ def update_customer():
     print("Customer updated successfully!")
     pass
 
-
-'''
-def delete_customer():
-    # Code to delete a customer
-    customer_id = input("Enter customer ID: ")
-    # Retrieve the customer from the database using the customer_id
-    customer = inn_customer.Customer.get_customer_by_id(customer_id)
-    # Delete the customer from the database
-    customer.delete()
-    print("Customer deleted successfully!")
-    pass
-'''
