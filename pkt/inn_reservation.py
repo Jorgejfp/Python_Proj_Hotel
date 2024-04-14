@@ -12,11 +12,22 @@ class Reservation:
         self.accommodation_days = accommodation_days        
         self.checkout = None     
         self.totalCost = self.getTotalCost()
-       
-      
+    
+    
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
         room_type = self.room_type
+<<<<<<< HEAD
+        # buscar el precio de la habitation por el ID
+        room = Room.find(room_type)
+        if room:
+            cost = room[2]
+            totalCost= self.accommodation_days * cost      
+            return totalCost
+        else:
+            print ("Room not found")
+            return None
+=======
         # Calculate the total cost based on the room type and accommodation days
         if self.room_type == "1":
             cost = 100   #buscar el precio de la habitacion por el ID
@@ -28,6 +39,7 @@ class Reservation:
             cost = 80    
         totalCost= self.accommodation_days * cost      
         return totalCost
+>>>>>>> eb2c59ff727338f70ebfd21dbbec935b90e1ef4d
     
     def changeCheckout(self):
         if self.checkout == 0:
@@ -42,7 +54,7 @@ class Reservation:
         cursor = None
         try:
             if connReservationDB is not None:
-               
+            
                 cursor = connReservationDB.cursor()
                 # Prepare the SQL query to retrieve the reservation              
                 query = "SELECT first_name, last_name, room_type, totalCost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
@@ -53,7 +65,11 @@ class Reservation:
                 if reservation is not None:
                     print(reservation)   
                     return reservation                
+<<<<<<< HEAD
                     print("Reservation found successfully!")    
+=======
+                
+>>>>>>> 1ae76883a26a323e06d511bba0db87c23abcb011
                 else:
                     print("Reservation not found")
             else:
@@ -206,7 +222,7 @@ class Reservation:
                 
             else:
                 print("Connection to database failed")
-              
+            
         except Exception as e:
             print(f"Failed to save reservation: {e}")
         finally:
