@@ -87,30 +87,34 @@ class Customer:
         
 
     def list_customers():
-        try:
-            # Connect to the MySQL database
-            connCustomerDB = connectDB
-            print("Connection to the database successful!")
+         # Connect to the MySQL database
+        connCustomerDB = connectDB
+        if connCustomerDB is not None:
+            
+            try:              
+               
+                # Create a cursor object to execute SQL queries
+                cursor = connCustomerDB.cursor()
 
-            # Create a cursor object to execute SQL queries
-            cursor = connCustomerDB.cursor()
+                # Prepare the SQL query to select all customers from the table
+                query = "SELECT * FROM inn_customer"
 
-            # Prepare the SQL query to select all customers from the table
-            query = "SELECT * FROM inn_customer"
+                # Execute the SQL query
+                cursor.execute(query)
 
-            # Execute the SQL query
-            cursor.execute(query)
+                # Fetch all the rows returned by the query
+                customers = cursor.fetchall()
 
-            # Fetch all the rows returned by the query
-            rows = cursor.fetchall()
-
-            # Close the cursor and database connection
-            cursor.close()
-       
-
-            # Return the fetched rows
-            return rows
-
-        except mysql.connector.Error as err:
-            print("Error:", err)
-            return []
+                # Close the cursor and database connection
+                cursor.close()
+                
+                for customer in customers:
+                    print(customer) # Imprimir cada registro de cliente
+            except Exception as e:
+                print(f"Error al listar clientes: {e}")  
+            finally:
+                cursor.close()
+                connCustomerDB.close()   
+        else:
+            print("Error: No se pudo conectar a la base de datos")
+             
