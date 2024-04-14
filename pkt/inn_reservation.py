@@ -15,19 +15,33 @@ class Reservation:
     
     
     #buscar el precio de la habitacion por el ID    
-    def getTotalCost(self):
-        room_type = self.room_type
-        # Calculate the total cost based on the room type and accommodation days
-        if self.room_type == "1":
-            cost = 100   #buscar el precio de la habitacion por el ID
-        elif self.room_type == "2":
-            cost = 150
-        elif self.room_type == "3":
-            cost = 200        
-        else:  #4
-            cost = 80    
-        totalCost= self.accommodation_days * cost      
-        return totalCost
+    #def getTotalCost(self):
+        #Buscar el precio de la habitacion por el ID
+        # try:
+        #     # Connect to the database
+        #     connRoomDB = connectDB()
+        #     cursor = None
+        #     if connRoomDB is not None:
+        #         cursor = connRoomDB.cursor()
+        #         # Prepare the SQL query to select the customer by ID
+        #         query = "SELECT * FROM inn_rooms WHERE id = %s"
+        #         cursor.execute(query, (self.customer_id))
+        #         room_data = cursor.fetchone()
+        #         if room_data is not None:
+        #             # Create a Room Data object from the fetched data
+        #             cost = Room(*room_data)
+        #             return cost
+        #         else:
+        #             print("Room type with ID {} does not exist.".format(self))
+        #     else:
+        #         print("Error: Could not connect to database")
+        # except Exception as e:
+        #     print(f"Error when fetching customer data: {e}")
+        # finally:
+        #     if cursor is not None:
+        #         cursor.close()
+        #     if connRoomDB is not None:
+        #         connRoomDB.close()
     
     def changeCheckout(self):
         if self.checkout == 0:
@@ -45,7 +59,7 @@ class Reservation:
             
                 cursor = connReservationDB.cursor()
                 # Prepare the SQL query to retrieve the reservation              
-                query = "SELECT first_name, last_name, room_type, totalCost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
+                query = "SELECT first_name, last_name, r.room_type, accommodation_days, room_price, cost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id JOIN inn_rooms d ON r.room_type = d.id WHERE c.phone_number = %s"
                 # Execute the query
                 cursor.execute(query, (phone_number,))
                 # Fetch the result
@@ -53,7 +67,7 @@ class Reservation:
                 if reservation is not None:
                     print(reservation)   
                     return reservation               
-                  
+                
                 
                 else:
                     print("Reservation not found")

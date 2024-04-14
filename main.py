@@ -208,16 +208,17 @@ def menu_reservation():
             reservationDelete = inn_reservation.Reservation.delete_reservation_by_id(reservation_id)
         elif choice == "4":
             reservations = inn_reservation.Reservation.list_reservations()       
-
         elif choice == "5":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = inn_reservation.Reservation.find(phone_number)           
         elif choice == "6":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = inn_reservation.Reservation.find(phone_number)
-            total_cost = reservation[3]    
-            print(f"Total cost of reservation: {total_cost}")        
-         
+            num_days = reservation[3]
+            cost_room = reservation[4]    
+            print(f"Cost of Room: {cost_room}")
+            print(f"Number of days: {num_days}")
+            print(f"Total cost of reservation: {num_days * cost_room}")        
         elif choice == "7":
             break
         else:
