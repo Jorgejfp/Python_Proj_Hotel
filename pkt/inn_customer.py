@@ -120,15 +120,7 @@ class Customer:
                 query = "SELECT first_name, last_name, email, phone_number FROM inn_customer WHERE id = %s"
                 cursor.execute(query, (customer_id,))
                 customer_data = cursor.fetchone()
-
-                if customer_data is not None:
-                    # Delete the customer directly using the fetched customer ID
-                    query_delete = "DELETE FROM inn_customer WHERE id = %s"
-                    cursor.execute(query_delete, (customer_id,))
-                    connCustomerDB.commit()
-                    print("Customer with ID {} deleted successfully!".format(customer_id))
-                else:
-                    print("Customer with ID {} does not exist.".format(customer_id))
+                                
             else:
                 print("Error: Could not connect to database")
         except Exception as e:
