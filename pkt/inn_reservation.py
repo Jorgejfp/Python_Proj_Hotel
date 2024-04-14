@@ -48,12 +48,15 @@ class Reservation:
                 print("Reservation not found. Please check the reservation ID.")
         except Exception as error:
             print(f"Failed to check in customer: {error}")
+            
     def check_out(self):
+        
         try:
+            
             # Get user input for reservation ID
             reservation_id = input("Enter reservation ID: ")
             # Find the existing reservation
-            reservation = Reservation.find(reservation_id)
+            reservation = Reservation.Find(reservation_id)
             if reservation:
                 # Update the check-out status of the reservation
                 reservation.checkout = 1  # Suponiendo que 1 representa el estado de check-out
@@ -111,46 +114,62 @@ class Reservation:
                 print("Reservation deleted successfully!")
             except Exception as error:
                 print(f"Failed to delete reservation: {error}")
-            
+                
+    #esta lista y funcionando       
     def list_reservations():
+        # Connect to the database
+        connReservationDB = connectDB()
+        # Create a cursor object to execute SQL queries
+        cursor = None
         try:
-            # Connect to the database
-            connection = connectDB()
-            # Create a cursor object to execute SQL queries
-            cursor = connection.cursor()
-            # Prepare the SQL query to retrieve all reservations
-            query = "SELECT * FROM inn_reservation"
-            # Execute the query
-            cursor.execute(query)
-            # Fetch all the results
-            reservations = cursor.fetchall()
-            # Display the results
-            for reservation in reservations:
-                print(reservation)
-            # Close the cursor and connection
-            cursor.close()
-            connection.close()
-        except mysql.connector.Error as error:
-            print(f"Failed to list reservations: {error}")
+            if connReservationDB is not None:
+                cursor = connReservationDB.cursor()
+                # Prepare the SQL query to retrieve all reservations
+                query = "SELECT * FROM inn_reservation"
+                # Execute the query
+                cursor.execute(query)
+                # Fetch all the results
+                reservations = cursor.fetchall()
+                # Display the results
+                for reservation in reservations:
+                    print(reservation)
+            else:
+                print("Connection to database failed")               
+        except Exception as e:
+            print(f"Failed to list reservations: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connReservationDB is not None:
+                connReservationDB.close()   
     
     def save_dbReservation(self):
+        # Connect to the database
+        connReservationDB = None
+        # Create a cursor object to execute SQL queries       
+        
         try:
-            # Connect to the database
-            connection = connectDB()
-            # Create a cursor object to execute SQL queries
-            cursor = connection.cursor()
-            # Prepare the SQL query to insert a new reservation
-            query = "INSERT INTO inn_reservation (room_type, customer_id, accommodation_days, cost, checkout) VALUES (%s, %s, %s, %s, %s)"
-            values = (self.room_type, self.customer_id, self.accommodation_days, self.cost, self.checkout)
-            # Execute the query
-            cursor.execute(query, values)
-            # Commit the changes to the database
-            connection.commit()
-            # Close the cursor and connection
-            cursor.close()
-            connection.close()
-        except mysql.connector.Error as error:
-            print(f"Failed to save reservation: {error}")
+            if connReservationDB is not None:
+                cursor = connReservationDB.cursor()
+                # Prepare the SQL query to insert a new reservation
+                query = "INSERT INTO inn_reservation (room_type, customer_id, accommodation_days, cost, checkout) VALUES (%s, %s, %s, %s, %s)"
+                values = (self.room_type, self.customer_id, self.accommodation_days, self.cost, self.checkout)
+                # Execute the query
+                cursor.execute(query, values)
+                # Commit the changes to the database
+                connReservationDB.commit()
+                
+            else:
+                print("Connection to database failed")
+              
+        except Exception as e:
+            print(f"Failed to save reservation: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connReservationDB is not None:
+                connReservationDB.close()
+                
             
     def update_dbReservation(self):
             try:
