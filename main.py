@@ -103,11 +103,11 @@ def menu_customers():
         elif choice == "2":
             update_customer()
         elif choice == "3":
-            delete_customer()
+            customer_id = int(input("Enter the ID of the customer you want to delete: "))         
+            customerDelete = inn_customer.Customer.delete_customer_by_id(customer_id)           
+            
         elif choice == "4":
-            customers = inn_customer.Customer.list_customers()
-            #for customer in customers:
-            #    print(customer)
+            customers = inn_customer.Customer.list_customers()         
         elif choice == "5":
             break
         else:
@@ -209,6 +209,8 @@ def update_customer():
     print("Customer updated successfully!")
     pass
 
+
+'''
 def delete_customer():
     # Code to delete a customer
     customer_id = input("Enter customer ID: ")
@@ -218,4 +220,4 @@ def delete_customer():
     customer.delete()
     print("Customer deleted successfully!")
     pass
-
+'''
