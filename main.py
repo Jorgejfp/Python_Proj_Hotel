@@ -208,7 +208,7 @@ def menu_reservation():
             reservationDelete = inn_reservation.Reservation.delete_reservation_by_id(reservation_id)
         elif choice == "4":
             reservations = inn_reservation.Reservation.list_reservations()
-            reservations = inn_reservation.Reservation.list_reservations()   
+        
 
         elif choice == "5":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
