@@ -213,6 +213,7 @@ def menu_reservation():
         elif choice == "4":
             reservations = inn_reservation.Reservation.list_reservations()
             reservations = inn_reservation.Reservation.list_reservations()   
+
         elif choice == "5":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = inn_reservation.Reservation.find(phone_number)
@@ -220,7 +221,7 @@ def menu_reservation():
                 print("\nReservation Details:")
                 print(reservation)
             else:
-                print("\nReservation not found. Please check the reservation ID.")
+                print("\nReservation not found. Please check the phone number.")
         elif choice == "6":
             break
         else:

@@ -15,14 +15,14 @@ class Reservation:
     def getTotalCost(self):
         # Calculate the total cost based on the room type and accommodation days
         if self.room_type == "S":
-            self.cost = 100
+            cost = 100
         elif self.room_type == "P":
-            self.cost = 150
+            cost = 150
         elif self.room_type == "O":
-            self.cost = 200        
+            scost = 200        
         else:  #E
-            self.cost = 80    
-        totalCost= self.accommodation_days * self.cost      
+            cost = 80    
+        totalCost= self.accommodation_days * cost      
         return totalCost
     
     def changeCheckout(self):
@@ -38,23 +38,22 @@ class Reservation:
         cursor = None
         try:
             if connReservationDB is not None:
+               
                 cursor = connReservationDB.cursor()
                 # Prepare the SQL query to retrieve the reservation              
-                query = "SELECT * FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
+                query = "SELECT first_name, last_name, room_type, totalCost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
                 # Execute the query
                 cursor.execute(query, (phone_number,))
                 # Fetch the result
                 reservation = cursor.fetchone()
-                if reservation:
-                    # Create a new reservation object
-                    reservationFound = Reservation(reservation[1], reservation[2], reservation[3], reservation[4], reservation[5])
-                    
-                    # Set the reservation ID
-                    #reservationFound.id = reservation[0]
-                    #reservationFound.printReservation()
-                    return reservationFound 
+                if reservation is not None:
+                    print(reservation)
+                    for row in reservation:
+                        print(row)                        
+                        print()  
+                        return reservation    
                 else:
-                    return None
+                    print("Reservation not found")
             else:
                 print("Connection to database failed")
         except Exception as e:
