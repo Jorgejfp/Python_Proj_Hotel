@@ -3,6 +3,7 @@ from pkt.inn_customer import Customer
 from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
+
 '''
 
 #conectar a la base de datos
@@ -194,23 +195,33 @@ def menu_room():
 def menu_reservation():
     while True:
         print("Reservation Menu\n\n")
-        print("1. Create Reservation")
-        print("2. Update Reservation")
+        print("1. Check-in")
+        print("2. Chek-out")
         print("3. Delete Reservation")
         print("4. List Reservations")
-        print("5. Back to Main Menu\n\n")
-        
+        print("5. Find Reservations\n\n")
+        print("6. Back to Main Menu\n\n")
         choice = input("Enter your choice: ")
-        
+
         if choice == "1":
-            create_reservation()
+            check_in()
         elif choice == "2":
-            update_reservation()
+            check_out()
         elif choice == "3":
-            delete_reservation()
+            reservation_id = int(input("Enter the ID of the reservation you want to delete: "))
+            reservationDelete = inn_reservation.Reservation.delete_reservation_by_id(reservation_id)
         elif choice == "4":
-            reservations = inn_reservation.Reservation.list_reservations()       
+            reservations = inn_reservation.Reservation.list_reservations()
+            reservations = inn_reservation.Reservation.list_reservations()   
         elif choice == "5":
+            phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
+            reservation = inn_reservation.Reservation.find(phone_number)
+            if reservation:
+                print("\nReservation Details:")
+                print(reservation)
+            else:
+                print("\nReservation not found. Please check the reservation ID.")
+        elif choice == "6":
             break
         else:
             print("Invalid choice. Please try again.")

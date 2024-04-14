@@ -3,17 +3,27 @@ from pkt.connection import connectDB
 
 
 class Reservation:
-    def __init__(self, room_type, customer_id, accommodation_days, cost, checkout):
+    def __init__(self, room_type, customer_id, accommodation_days, checkout):
         self.id = None
         self.room_type = room_type
         self.customer_id = customer_id  
-        self.accommodation_days = accommodation_days
-        self.cost = Reservation.getTotalCost() 
+        self.accommodation_days = accommodation_days        
         self.checkout = None     
+        self.totalcost = self.getTotalCost()
       
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
-        return self.accommodation_days * self.cost
+        # Calculate the total cost based on the room type and accommodation days
+        if self.room_type == "S":
+            self.cost = 100
+        elif self.room_type == "P":
+            self.cost = 150
+        elif self.room_type == "O":
+            self.cost = 200        
+        else:  #E
+            self.cost = 80    
+        totalCost= self.accommodation_days * self.cost      
+        return totalCost
     
     def changeCheckout(self):
         if self.checkout == 0:
@@ -21,6 +31,39 @@ class Reservation:
         else:
             self.checkout = 0
             
+    def find(phone_number):
+        # Connect to the database
+        connReservationDB = connectDB()
+        # Create a cursor object to execute SQL queries
+        cursor = None
+        try:
+            if connReservationDB is not None:
+                cursor = connReservationDB.cursor()
+                # Prepare the SQL query to retrieve the reservation              
+                query = "SELECT * FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
+                # Execute the query
+                cursor.execute(query, (phone_number,))
+                # Fetch the result
+                reservation = cursor.fetchone()
+                if reservation:
+                    # Create a new reservation object
+                    reservationFound = Reservation(reservation[1], reservation[2], reservation[3], reservation[4], reservation[5])
+                    
+                    # Set the reservation ID
+                    #reservationFound.id = reservation[0]
+                    #reservationFound.printReservation()
+                    return reservationFound 
+                else:
+                    return None
+            else:
+                print("Connection to database failed")
+        except Exception as e:
+            print(f"Failed to find reservation: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connReservationDB is not None:
+                connReservationDB.close()        
             
     def printReservation(self):
         print(f"Reservation ID: {self.id}")
