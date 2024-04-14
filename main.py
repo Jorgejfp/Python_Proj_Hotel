@@ -85,7 +85,7 @@ def update_customer():
     # Try to retrieve the customer by ID
     customer = inn_customer.Customer.get_customer_by_id(customer_id)
     
-    # Check if the customer object is valid
+    # Check if the customer object is valid1
     if customer:
         # Print customer details
         print("\nCustomer Details:")
@@ -98,6 +98,7 @@ def update_customer():
         phone_number = input("Enter updated phone number: ")
         
         # Update the customer's information directly
+        customer.id = customer_id
         customer.first_name = first_name
         customer.last_name = last_name
         customer.email = email
@@ -120,9 +121,7 @@ def main_menu():
         print("1. Menu Customer")
         print("2. Menu Room")
         print("3. Menu Reservation")
-        print("4. Check In")
-        print("5. Check Out")
-        print("6. Exit\n\n")
+        print("4. Exit\n\n")
         
         choice = input("Enter your choice: ")
         
@@ -133,10 +132,6 @@ def main_menu():
         elif choice == "3":
             menu_reservation()
         elif choice == "4":
-            check_in()
-        elif choice == "5":
-            check_out()
-        elif choice == "6":
             print("Are you sure you want to exit? (Y/N)")
             confirm = input("Enter your choice: ")
             if confirm.lower() == "y":
