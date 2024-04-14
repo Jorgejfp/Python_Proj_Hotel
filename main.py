@@ -148,9 +148,7 @@ def menu_reservation():
         elif choice == "3":
             delete_reservation()
         elif choice == "4":
-            reservations = inn_reservation.Reservation.list_reservations()
-            for reservation in reservations:
-                print(reservation)
+            reservations = inn_reservation.Reservation.list_reservations()       
         elif choice == "5":
             break
         else:
