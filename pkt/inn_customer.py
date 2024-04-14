@@ -53,23 +53,54 @@ class Customer:
         # Close the cursor and database connection
         cursor.close()
         print("Customer data updated successfully!")
+    
+    def delete_customer(customer_id, cursor, connection):
         
-    def delete_from_dbCustomer(self):
-        # Connect to the MySQL database
-        connCustomerDB = connectDB()
-        # Create a cursor object to execute SQL queries
-        cursor = connCustomerDB.cursor()
-        # Prepare the SQL query to delete customer data from the table
-        query = "DELETE FROM inn_customer WHERE id = %s"
-        values = (self.id,)
-        # Execute the SQL query
-        cursor.execute(query, values)
-        # Commit the changes to the database
-        connCustomerDB.commit()
-        # Close the cursor and database connection
-        cursor.close()
-        print("Customer data deleted successfully!")
+        try:
+            # Prepare the SQL query to delete customer data from the table
+            query = "DELETE FROM inn_customer WHERE id = %s"
+            cursor.execute(query, (customer_id,))
+
+            # Commit the changes to the database
+            connection.commit()
+
+            print("Customer data deleted successfully!")
+        except Exception as e:
+            print(f"Error when deleting customer data: {e}")
+            connection.rollback()  # Rollback the changes if an error occurs finally:
+        finally:
+            cursor.close()
+'''       
+    def delete_from_dbCustomer(self):       
         
+        try:
+            # Connect to the MySQL database
+            connCustomerDB = connectDB()
+            #cursor = None  # Inicializar cursor a None fuera del bloque try
+            if connCustomerDB is not None:
+                # Create a cursor object to execute SQL queries
+                cursor = connCustomerDB.cursor()
+                # Prepare the SQL query to delete customer data from the table
+                query = "DELETE FROM inn_customer WHERE id = %s"
+                values = (self.id,)
+                # Execute the SQL query
+                cursor.execute(query, values)
+                # Commit the changes to the database
+                connCustomerDB.commit()
+                # Close the cursor and database connection
+              
+                print("Customer data deleted successfully!")
+            else:
+                print("Error: Could not connect to database")
+        except Exception as e:
+            print(f"Error when deleting customer data: {e}")
+            connCustomerDB.rollback() # Rollback the changes if an error occurs
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connCustomerDB is not None:
+                connCustomerDB.close()
+'''       
     def list_customers():
          # Connect to the MySQL database
         connCustomerDB = connectDB()
@@ -103,4 +134,39 @@ class Customer:
                 cursor.close()
             if connCustomerDB is not None:
                 connCustomerDB.close()
-     
+    
+                
+                
+    def delete_customer_by_id(customer_id):
+    # Connect to the database
+        connCustomerDB = connectDB()
+        cursor = None
+
+        try:
+            if connCustomerDB is not None:
+                cursor = connCustomerDB.cursor()
+
+                # Check if the customer ID exists in the database
+                query = "SELECT * FROM inn_customer WHERE id = %s"
+                cursor.execute(query, (customer_id,))
+                customer = cursor.fetchone()
+
+                if customer is not None:
+                    # Customer exists, proceed with deletion
+                    customer.delete_customer()
+                    #delete_customer(customer_id, cursor, connCustomerDB)
+                else:
+                    print("Customer with ID {} does not exist.".format(customer_id))
+            else:
+                print("Error: Could not connect to database")
+        except Exception as e:
+            print(f"Error when deleting customer data: {e}")
+            if connCustomerDB is not None:
+                connCustomerDB.rollback()  # Rollback the changes if an error occurs
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connCustomerDB is not None:
+                connCustomerDB.close()              
+    
+    
