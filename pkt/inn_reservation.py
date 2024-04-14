@@ -7,7 +7,7 @@ from pkt.inn_room import Room
 class Reservation:
     def __init__(self, room_type, customer_id, accommodation_days, checkout):
         self.id = None
-        self.room_type = room_type #int
+        self.room_type = room_type      #int 
         self.customer_id = customer_id  
         self.accommodation_days = accommodation_days        
         self.checkout = None     
@@ -19,12 +19,12 @@ class Reservation:
         room_type = self.room_type
         # Calculate the total cost based on the room type and accommodation days
         if self.room_type == "1":
-            cost = 100
+            cost = 100   #buscar el precio de la habitacion por el ID
         elif self.room_type == "2":
             cost = 150
         elif self.room_type == "3":
             cost = 200        
-        else:  #E
+        else:  #4
             cost = 80    
         totalCost= self.accommodation_days * cost      
         return totalCost
