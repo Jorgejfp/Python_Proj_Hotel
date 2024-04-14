@@ -6,7 +6,7 @@ class Room:
             self.id = None
             self.room_type = room_type
             self.room_price = room_price
-            self.room_availability = availability
+            self.availability = availability
             
     def getID(self, room_type):
         try:
@@ -143,7 +143,9 @@ class Room:
             return total_available_rooms
         except mysql.connector.Error as error:
             print(f"Failed to get total available rooms: {error}")
-            
+    
+    
+             
     
     def check_availability(room_type):
         
@@ -156,7 +158,7 @@ class Room:
                 cursor = connRoomDB.cursor()
 
                 # Prepare the SQL query to check the availability of a room based on room_type
-                query = "SELECT room_availability FROM rooms WHERE room_type = %s"
+                query = "SELECT availability FROM inn_rooms WHERE room_type = %s"
                 values = (room_type,)
 
                 # Execute the query
