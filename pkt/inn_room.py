@@ -7,9 +7,7 @@ class Room:
             self.room_type = room_type
             self.room_price = room_price
             self.room_availability = availability
-     
             
-   
     def getID(self, room_type):
         try:
             # Connect to the database
