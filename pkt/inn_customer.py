@@ -3,7 +3,7 @@ from pkt.connection import connectDB
 
 class Customer:
     def __init__(self, first_name, last_name, email, phone_number):
-        #self.id = customer_id
+        self.id = None
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -120,7 +120,7 @@ class Customer:
             if connCustomerDB is not None:
                 cursor = connCustomerDB.cursor()
                 # Prepare the SQL query to select the customer by ID
-                query = "SELECT * FROM inn_customer WHERE id = %s"
+                query = "SELECT first_name,last_name,email,phone_number FROM inn_customer WHERE id = %s"
                 cursor.execute(query, (customer_id,))
                 customer_data = cursor.fetchone()
                 if customer_data is not None:
@@ -140,7 +140,7 @@ class Customer:
                 connCustomerDB.close()
                 
     def print_customer_details(self):
-        print("Customer ID:", self.id)
+        #print("Customer ID:", self.id)
         print("First Name:", self.first_name)
         print("Last Name:", self.last_name)
         print("Email:", self.email)
