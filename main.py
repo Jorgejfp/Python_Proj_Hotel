@@ -199,8 +199,9 @@ def menu_reservation():
         print("2. Chek-out")
         print("3. Delete Reservation")
         print("4. List Reservations")
-        print("5. Find Reservations\n\n")
-        print("6. Back to Main Menu\n\n")
+        print("5. Find Reservations")
+        print("6. get total cost of reservation")
+        print("7. Back to Main Menu\n\n")
         choice = input("Enter your choice: ")
 
         if choice == "1":
@@ -223,6 +224,10 @@ def menu_reservation():
             else:
                 print("\nReservation not found. Please check the phone number.")
         elif choice == "6":
+            reservation = int(input("Enter the phone number of the reservation you want to find: "))
+            total_cost = inn_reservation.Reservation.getTotalCost(reservation)
+            print(f"Total cost of reservation with ID {reservation}: {total_cost}")
+        elif choice == "7":
             break
         else:
             print("Invalid choice. Please try again.")

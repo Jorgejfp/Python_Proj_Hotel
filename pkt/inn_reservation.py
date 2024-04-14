@@ -3,13 +3,15 @@ from pkt.connection import connectDB
 
 
 class Reservation:
-    def __init__(self, room_type, customer_id, accommodation_days, checkout):
+    def __init__(self, room_type, customer_id, accommodation_days, totalCost, checkout):
         self.id = None
         self.room_type = room_type
         self.customer_id = customer_id  
         self.accommodation_days = accommodation_days        
         self.checkout = None     
-        self.totalcost = self.getTotalCost()
+        self.totalCost = totalCost
+        if(totalCost is None):
+            self.totalCost = self.getTotalCost()
       
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
