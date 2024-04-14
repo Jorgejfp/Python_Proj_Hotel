@@ -104,7 +104,12 @@ def menu_customers():
             update_customer()
         elif choice == "3":
             customer_id = int(input("Enter the ID of the customer you want to delete: "))         
-            customerDelete = inn_customer.Customer.delete_customer_by_id(customer_id)           
+            customerDelete = inn_customer.Customer.delete_customer_by_id(customer_id)     
+            if customerDelete:
+                customerDelete.delete_customer()
+                print("Customer deleted successfully!")
+            else:
+                print("Customer not found.")      
             
         elif choice == "4":
             customers = inn_customer.Customer.list_customers()         
