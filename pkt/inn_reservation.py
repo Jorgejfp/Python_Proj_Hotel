@@ -17,17 +17,15 @@ class Reservation:
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
         room_type = self.room_type
-        # Calculate the total cost based on the room type and accommodation days
-        if self.room_type == "1":
-            cost = 100
-        elif self.room_type == "2":
-            cost = 150
-        elif self.room_type == "3":
-            cost = 200        
-        else:  #E
-            cost = 80    
-        totalCost= self.accommodation_days * cost      
-        return totalCost
+        # buscar el precio de la habitation por el ID
+        room = Room.find(room_type)
+        if room:
+            cost = room[2]
+            totalCost= self.accommodation_days * cost      
+            return totalCost
+        else:
+            print ("Room not found")
+            return None
     
     def changeCheckout(self):
         if self.checkout == 0:
