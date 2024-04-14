@@ -53,6 +53,7 @@ finally:
         connectDB.close()
         print("Conexión a la base de datos cerrada")
 '''
+
 #Definicion de funciones
 
 def check_in():
@@ -178,7 +179,7 @@ def menu_room():
         if choice == "1":
             rooms = inn_room.Room.list_rooms()                       
         elif choice == "2":
-            room_type = input("Enter room type: \n\n" "S: Standard\n" "P: Premium\n" "O: Ocean View\n" "E: Economy\n\n")
+            room_type = input("Enter room type: \n\n" "1: Standard\n" "2: Premium\n" "3: Ocean View\n" "4: Economy\n\n")
             availability = inn_room.Room.check_availability(room_type)
             print(f"Availability of {room_type} rooms: {availability}")
         elif choice == "3":
@@ -211,17 +212,14 @@ def menu_reservation():
 
         elif choice == "5":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
-            reservation = inn_reservation.Reservation.find(phone_number)
-            if reservation:
-                print("\nReservation Details:")
-                print(reservation)
-            else:
-                print("\nReservation not found. Please check the phone number.")
+            reservation = inn_reservation.Reservation.find(phone_number)           
         elif choice == "6":
-            reservation = int(input("Enter the phone number of the reservation you want to find: "))
-            total_cost = inn_reservation.Reservation.getTotalCost(reservation)
-            print(f"Total cost of reservation with ID {reservation}: {total_cost}")
-        elif choice == "7":
+            phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
+            reservation = inn_reservation.Reservation.find(phone_number)
+            total_cost = reservation[3]    
+            print(f"Total cost of reservation: {total_cost}")        
+         
+        elif choice == "6":
             break
         else:
             print("Invalid choice. Please try again.")
