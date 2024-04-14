@@ -17,15 +17,15 @@ class Reservation:
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
         room_type = self.room_type
-        # buscar el precio de la habitation por el ID
-        room = Room.find(room_type)
-        if room:
-            cost = room[2]
-            totalCost= self.accommodation_days * cost      
-            return totalCost
-        else:
-            print ("Room not found")
-            return None
+        # Calculate the total cost based on the room type and accommodation days
+        if self.room_type == "1":
+            cost = 100   #buscar el precio de la habitacion por el ID
+        elif self.room_type == "2":
+            cost = 150
+        elif self.room_type == "3":
+            cost = 200        
+        else:  #4
+            cost = 80    
         totalCost= self.accommodation_days * cost      
         return totalCost
     
@@ -52,12 +52,9 @@ class Reservation:
                 reservation = cursor.fetchone()
                 if reservation is not None:
                     print(reservation)   
-                    return reservation                
-<<<<<<< HEAD
-                    print("Reservation found successfully!")    
-=======
+                    return reservation               
+                  
                 
->>>>>>> 1ae76883a26a323e06d511bba0db87c23abcb011
                 else:
                     print("Reservation not found")
             else:
