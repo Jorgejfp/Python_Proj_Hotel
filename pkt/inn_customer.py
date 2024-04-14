@@ -8,61 +8,38 @@ class Customer:
         self.email = email
         self.phone_number = phone_number       
         
-    def getCostumerId(self, phone_number): 
-        try:
-            # Connect to the MySQL database
-            connCustomerDB = connectDB()
-            # Create a cursor object to execute SQL queries
-            cursor = connCustomerDB.cursor()
-
-            # Prepare the SQL query to select a customer by phone number
-            query = "SELECT * FROM inn_customer WHERE phone_number = %s"
-            values = (phone_number,)
-
-            # Execute the SQL query
-            cursor.execute(query, values)
-
-            # Fetch the customer data
-            customer_data = cursor.fetchone()
-
-            # Close the cursor and database connection
-            cursor.close()
-           
-
-            # If the customer data is found, create a Customer object and return it
-            if customer_data:
-                customer = Customer(customer_data[1], customer_data[2], customer_data[3], customer_data[4])
-                customer.id = customer_data[0]
-                return customer
-            else:
-                return None
-
-        except mysql.connector.Error as err:
-            print("Error:", err)
-            return None
-        
+         
     
     def save_to_dbCustomer(self):
         # Connect to the MySQL database
         connCustomerDB = connectDB()
-        # Create a cursor object to execute SQL queries
-        cursor = connCustomerDB.cursor()
+        if connCustomerDB is not None:
+            try:
+              
+                # Create a cursor object to execute SQL queries
+                cursor = connCustomerDB.cursor()
 
-        # Prepare the SQL query to insert customer data into the table
-        query = "INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)"
-        values = (self.first_name, self.last_name, self.email, self.phone_number)
+                # Prepare the SQL query to insert customer data into the table
+                query = "INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)"
+                values = (self.first_name, self.last_name, self.email, self.phone_number)
 
-        # Execute the SQL query
-        cursor.execute(query, values)
+                # Execute the SQL query
+                cursor.execute(query, values)
 
-        # Commit the changes to the database
-        connCustomerDB.commit()
-
-        # Close the cursor and database connection
-        cursor.close()
-    
-        
-        print("Customer data saved successfully!")
+                # Commit the changes to the database
+                connCustomerDB.commit()
+                
+                print("Datos del cliente guardados exitosamente!")
+            except Exception as e:
+                print(f"Error al guardar datos del cliente: {e}")
+                connCustomerDB.rollback() # Rollback the changes if an error occurs
+            finally:
+                # Close the cursor and database connection
+                cursor.close()
+                connCustomerDB.close()
+        else:    
+            
+            print("Error: No se pudo conectar a la base de datos")
         
     def update_in_dbCustomer(self):
         # Connect to the MySQL database

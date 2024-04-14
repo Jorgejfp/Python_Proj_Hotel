@@ -4,6 +4,8 @@ from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
 
+'''
+
 #conectar a la base de datos
 try:
     connection = connectDB.connect()
@@ -50,7 +52,7 @@ finally:
         cursor.close()
         connectDB.close()
         print("Conexión a la base de datos cerrada")
-
+'''
 def main_menu():
     while True:
         print("\n\nWelcome to Pacific Inn Reservation System\n\n")
