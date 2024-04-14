@@ -126,9 +126,7 @@ def menu_room():
         print("3. Back to Main Menu\n\n")               
         choice = input("Enter your choice: ")
         if choice == "1":
-            rooms = inn_room.Room.list_rooms()
-            for room in rooms:
-                print(room)
+            rooms = inn_room.Room.list_rooms()                       
         elif choice == "2":
             room_type = input("Enter room type: \n\n" "S: Standard\n" "P: Premium\n" "O: Ocean View\n" "E: Economy\n\n")
             availability = inn_room.Room.check_availability(room_type)
