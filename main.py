@@ -4,39 +4,55 @@ from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
 
+'''
+
+#conectar a la base de datos
 try:
-    with open("reservation_file.txt", "r") as f1:
-        reservations = []
+    connection = connectDB.connect()
+    
+    if connection.is_connected():
+        print("Conexión a la base de datos establecida")
+        try:
+                with open("reservation_file.txt", "r") as f1:
+                    cursor = connection.cursor()
+                   
 
-        for line in f1.readlines():
-            data = line.strip().split(",")
-            reservation_duration = data[5]  # Suponiendo que la duración de la reserva está en la última posición de los datos
+                    for line in f1.readlines():
+                        data = line.strip().split(",")
+                        reservation_duration = data[5]  # Suponiendo que la duración de la reserva está en la última posición de los datos
 
-            # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
-            customer = Customer(data[0], data[1], data[2], data[3])
-            
-            # buscar el ID asociado al tipo de habitacion
-            room_id = Room.getID(data[4])
-           
-            
-            # y luego recuperar las claves primarias generadas automáticamente
-            customer_id = customer.getCostumerId(data[3])
-            
-            # tenemos las claves primarias customer_id y room_id
+                        # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
+                        cursor.execute("INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)", (data[0], data[1], data[2], data[3]))
+                        
+                        #busca al ultimo Id agregado                        
+                        customer_id = cursor.lastrowid
+                        # buscar el ID asociado al tipo de habitacion
+                        room_id = Room.getID(data[4])
+                    
+                        #inserta datos en la tabla reservation
+                        cursor.execute("INSERT INTO inn_reservation (customer_id, room_id, reservation_duration) VALUES (%s, %s, %s)", 
+                                       (customer_id, room_id, reservation_duration))    
+                        # Commit para confirmar las transacciones en la base de datos
+                        connection.commit()
+                        
+                    print("Datos de reserva insertados correctamente en la base de datos")   
+                    
+                       
          
-            # Creamos un nuevo objeto Reservation con las claves externas correctas
-            reservation = Reservation(customer_id, room_id, reservation_duration)
-            reservations.append(reservation)
 
-    # Imprimir las reservaciones
-    for reservation in reservations:
-        print(reservation)
-
-except FileNotFoundError:
-    print("El archivo reservation_file.txt no se ha encontrado.")
-except Exception as e:
-    print(f"Se produjo un error: {e}")
-
+        except FileNotFoundError:
+                print("El archivo reservation_file.txt no se ha encontrado.")
+                 
+except connectDB.Error as error:
+    print(f"Error al conectar la base de datos: {error}")
+    
+finally:
+    #connectDB.close()
+    if connectDB.is_connected():
+        cursor.close()
+        connectDB.close()
+        print("Conexión a la base de datos cerrada")
+'''
 def main_menu():
     while True:
         print("\n\nWelcome to Pacific Inn Reservation System\n\n")
