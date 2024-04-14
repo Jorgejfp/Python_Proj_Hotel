@@ -8,9 +8,10 @@ class Reservation:
         self.room_type = room_type
         self.customer_id = customer_id  
         self.accommodation_days = accommodation_days
-        self.cost = cost
-        self.checkout = checkout      
-        
+        self.cost = Reservation.getTotalCost() 
+        self.checkout = None     
+      
+    #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
         return self.accommodation_days * self.cost
     
