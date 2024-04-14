@@ -12,8 +12,8 @@ class Reservation:
         self.accommodation_days = accommodation_days        
         self.checkout = None     
         self.totalCost = self.getTotalCost()
-       
-      
+    
+    
     #buscar el precio de la habitacion por el ID    
     def getTotalCost(self):
         room_type = self.room_type
@@ -42,7 +42,7 @@ class Reservation:
         cursor = None
         try:
             if connReservationDB is not None:
-               
+            
                 cursor = connReservationDB.cursor()
                 # Prepare the SQL query to retrieve the reservation              
                 query = "SELECT first_name, last_name, room_type, totalCost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id WHERE c.phone_number = %s"
@@ -53,7 +53,7 @@ class Reservation:
                 if reservation is not None:
                     print(reservation)   
                     return reservation                
-                   
+                
                 else:
                     print("Reservation not found")
             else:
@@ -206,7 +206,7 @@ class Reservation:
                 
             else:
                 print("Connection to database failed")
-              
+            
         except Exception as e:
             print(f"Failed to save reservation: {e}")
         finally:
