@@ -159,7 +159,7 @@ def menu_customers():
         
         choice = input("Enter your choice: ")
         
-if choice == "1":
+        if choice == "1":
             create_customer()
         elif choice == "2":
             update_customer()
@@ -216,7 +216,7 @@ def menu_reservation():
             break
         else:
             print("Invalid choice. Please try again.")
-
+            
 if __name__ == "__main__":
     main_menu()
 
