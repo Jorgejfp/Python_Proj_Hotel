@@ -52,6 +52,67 @@ finally:
         connectDB.close()
         print("Conexión a la base de datos cerrada")
 '''
+#Definicion de funciones
+
+def check_in():
+    # Code to check in a customer
+    pass
+
+def check_out():
+    # Code to check out a customer
+    pass
+
+def create_customer():
+    # Code to create a new customer
+    first_name = input("Enter customer's first name: ")
+    last_name = input("Enter customer's last name: ")
+    email = input("Enter customer's email: ")
+    phone_number = input("Enter customer's phone number: ")
+    
+    # Create a new customer object
+    customer = inn_customer.Customer(first_name, last_name, email, phone_number)
+    
+    # Save the customer to the database
+    customer.save_to_dbCustomer()
+    
+    print("Customer created successfully!")
+    pass
+
+def update_customer():
+    customer_id = input("Enter customer ID: ")
+    
+    # Try to retrieve the customer by ID
+    customer = inn_customer.Customer.get_customer_by_id(customer_id)
+    
+    # Check if the customer object is valid
+    if customer:
+        # Print customer details
+        print("\nCustomer Details:")
+        customer.print_customer_details()
+        
+        # Prompt the user to enter updated information
+        first_name = input("\nEnter updated first name: ")
+        last_name = input("Enter updated last name: ")
+        email = input("Enter updated email: ")
+        phone_number = input("Enter updated phone number: ")
+        
+        # Update the customer's information directly
+        customer.first_name = first_name
+        customer.last_name = last_name
+        customer.email = email
+        customer.phone_number = phone_number
+        
+        # Save the updated information to the database
+        customer.update_in_dbCustomer()
+        
+        print("\nCustomer updated successfully!")
+    else:
+        print("\nCustomer not found. Please check the customer ID.")
+
+
+# Definition of Main Menu
+
+
 def main_menu():
     while True:
         print("\n\nWelcome to Pacific Inn Reservation System\n\n")
@@ -98,7 +159,7 @@ def menu_customers():
         
         choice = input("Enter your choice: ")
         
-        if choice == "1":
+if choice == "1":
             create_customer()
         elif choice == "2":
             update_customer()
@@ -158,51 +219,4 @@ def menu_reservation():
 
 if __name__ == "__main__":
     main_menu()
-
-
-#crear menu con las opciones crear crear cliente, crear habitacion, crear reserva, check in, check out, salir
-def create_customer():
-    # Code to create a new customer
-    pass
-
-def check_in():
-    # Code to check in a customer
-    pass
-
-def check_out():
-    # Code to check out a customer
-    pass
-
-def create_customer():
-    # Code to create a new customer
-    first_name = input("Enter customer's first name: ")
-    last_name = input("Enter customer's last name: ")
-    email = input("Enter customer's email: ")
-    phone_number = input("Enter customer's phone number: ")
-    
-    # Create a new customer object
-    customer = inn_customer.Customer(first_name, last_name, email, phone_number)
-    
-    # Save the customer to the database
-    customer.save()
-    
-    print("Customer created successfully!")
-    pass
-
-def update_customer():
-    # Code to update an existing customer
-    customer_id = input("Enter customer ID: ")
-    first_name = input("Enter updated first name: ")
-    last_name = input("Enter updated last name: ")
-    email = input("Enter updated email: ")
-    phone_number = input("Enter updated phone number: ")
-
-    # Retrieve the customer from the database using the customer_id
-    customer = inn_customer.Customer.get_customer_by_id(customer_id)
-
-    # Update the customer's information
-    customer.update(first_name, last_name, email, phone_number)
-
-    print("Customer updated successfully!")
-    pass
 
