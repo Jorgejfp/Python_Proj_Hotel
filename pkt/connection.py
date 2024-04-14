@@ -4,7 +4,7 @@ def connectDB():
     
     try:
         conn = mysql.connector.connect(user='root', password='', host='localhost', database='inn_reservation', port='3306')
-        print("Connection to the database successful!")
+        #print("Connection to the database successful!")
         if conn.is_connected():
             print("Connection successful!")
             return conn
@@ -12,4 +12,4 @@ def connectDB():
     except mysql.connector.Error as err:
         print("Error connecting to the database:", err)
         
-        return None
+    return None

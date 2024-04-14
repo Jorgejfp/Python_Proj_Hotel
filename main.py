@@ -3,7 +3,6 @@ from pkt.inn_customer import Customer
 from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
-
 '''
 
 #conectar a la base de datos
@@ -107,8 +106,8 @@ def menu_customers():
             delete_customer()
         elif choice == "4":
             customers = inn_customer.Customer.list_customers()
-            for customer in customers:
-                print(customer)
+            #for customer in customers:
+            #    print(customer)
         elif choice == "5":
             break
         else:

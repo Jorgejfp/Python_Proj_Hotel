@@ -88,33 +88,36 @@ class Customer:
 
     def list_customers():
          # Connect to the MySQL database
-        connCustomerDB = connectDB
-        if connCustomerDB is not None:
-            
-            try:              
-               
-                # Create a cursor object to execute SQL queries
-                cursor = connCustomerDB.cursor()
-
-                # Prepare the SQL query to select all customers from the table
-                query = "SELECT * FROM inn_customer"
-
-                # Execute the SQL query
-                cursor.execute(query)
-
-                # Fetch all the rows returned by the query
-                customers = cursor.fetchall()
-
-                # Close the cursor and database connection
-                cursor.close()
+        connCustomerDB = connectDB()
+        cursor = None  # Inicializar cursor a None fuera del bloque try
+        try:
+            # Verificar si la conexión se ha establecido correctamente 
+            if connCustomerDB is not None:
                 
-                for customer in customers:
-                    print(customer) # Imprimir cada registro de cliente
-            except Exception as e:
-                print(f"Error al listar clientes: {e}")  
-            finally:
+                    # Create a cursor object to execute SQL queries
+                    cursor = connCustomerDB.cursor()
+
+                    # Prepare the SQL query to select all customers from the table
+                    query = "SELECT * FROM inn_customer"
+
+                    # Execute the SQL query
+                    cursor.execute(query)
+
+                    # Fetch all the rows returned by the query
+                    customers = cursor.fetchall()
+                    
+                    for customer in customers:
+                        print(customer) # Imprimir cada registro de cliente
+                        
+            else:
+                print("Error: No se pudo conectar a la base de datos")
+        except Exception as e:
+                    print(f"Error al listar clientes: {e}")  
+        finally:
+                    # Cerrar el cursor y la conexión a la base de datos si el cursor se ha inicializado correctamente
+            if cursor is not None: 
                 cursor.close()
+            if connCustomerDB is not None:
                 connCustomerDB.close()   
-        else:
-            print("Error: No se pudo conectar a la base de datos")
-             
+         
+                
