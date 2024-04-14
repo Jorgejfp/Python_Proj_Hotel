@@ -53,7 +53,11 @@ class Reservation:
                 if reservation is not None:
                     print(reservation)   
                     return reservation                
+<<<<<<< HEAD
+                    print("Reservation found successfully!")    
+=======
                 
+>>>>>>> 1ae76883a26a323e06d511bba0db87c23abcb011
                 else:
                     print("Reservation not found")
             else:
