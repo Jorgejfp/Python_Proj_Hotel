@@ -21,7 +21,7 @@ class Reservation:
         elif self.room_type == "P":
             cost = 150
         elif self.room_type == "O":
-            scost = 200        
+            cost = 200        
         else:  #E
             cost = 80    
         totalCost= self.accommodation_days * cost      
