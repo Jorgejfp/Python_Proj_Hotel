@@ -65,6 +65,7 @@ def check_out():
     pass
 
 def create_customer():
+    print("Enter customer details:")
     # Code to create a new customer
     first_name = input("Enter customer's first name: ")
     last_name = input("Enter customer's last name: ")
@@ -76,8 +77,6 @@ def create_customer():
     
     # Save the customer to the database
     customer.save_to_dbCustomer()
-    
-    print("Customer created successfully!")
     pass
 
 def update_customer():
