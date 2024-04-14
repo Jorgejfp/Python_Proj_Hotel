@@ -219,7 +219,7 @@ def menu_reservation():
             total_cost = reservation[3]    
             print(f"Total cost of reservation: {total_cost}")        
          
-        elif choice == "6":
+        elif choice == "7":
             break
         else:
             print("Invalid choice. Please try again.")
