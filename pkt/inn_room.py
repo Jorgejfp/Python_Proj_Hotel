@@ -145,35 +145,40 @@ class Room:
             print(f"Failed to get total available rooms: {error}")
             
     
-    def check_availability(self):
-            try:
-                # Connect to the database
-                connRoomDB = connectDB()
-
+    def check_availability(room_type):
+        
+        connRoomDB = connectDB()
+        cursor = None
+        try:
+            if connRoomDB is not None:
+                
                 # Create a cursor object to execute SQL queries
                 cursor = connRoomDB.cursor()
 
                 # Prepare the SQL query to check the availability of a room based on room_type
                 query = "SELECT room_availability FROM rooms WHERE room_type = %s"
-                values = (self.room_type,)
+                values = (room_type,)
 
                 # Execute the query
                 cursor.execute(query, values)
 
                 # Fetch the result
                 availability = cursor.fetchone()
-
-                # Close the cursor and connection
-                cursor.close()
-           
-
-                if availability:
+                
+                if availability is not None:
                     return availability[0] > 0
                 else:
                     return False
-            except mysql.connector.Error as error:
-                print(f"Failed to check room availability: {error}")
-                return False
+            else:
+                print("Connection to database failed")
+        except Exception as e:
+                print(f"Failed to check room availability: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connRoomDB is not None:
+                connRoomDB.close()
+           
                 
                     
            
