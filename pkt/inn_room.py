@@ -142,10 +142,7 @@ class Room:
 
             return total_available_rooms
         except mysql.connector.Error as error:
-            print(f"Failed to get total available rooms: {error}")
-    
-    
-             
+            print(f"Failed to get total available rooms: {error}")                                      
     
     def check_availability(room_type):
         
@@ -168,11 +165,12 @@ class Room:
                 availability = cursor.fetchone()
                 
                 if availability is not None:
-                    return availability[0] > 0
+                    return availability[0] 
                 else:
-                    return False
+                    print("there is no availability for this room type")
             else:
                 print("Connection to database failed")
+             
         except Exception as e:
                 print(f"Failed to check room availability: {e}")
         finally:
