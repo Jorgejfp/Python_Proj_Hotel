@@ -202,7 +202,7 @@ def menu_reservation():
         if choice == "1":
             check_in()
         elif choice == "2":
-            phone_number = int(input("Please give your phone number: "))                       
+            phone_number = input("Please give your phone number: ")                      
             checkout = check_out(phone_number)
             
         elif choice == "3":
