@@ -56,14 +56,6 @@ finally:
 
 #Definicion de funciones
 
-def check_in():
-    # Code to check in a customer
-    pass
-
-def check_out():
-    # Code to check out a customer
-    pass
-
 def create_customer():
     print("Enter customer details:")
     # Code to create a new customer
@@ -203,10 +195,12 @@ def menu_reservation():
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = Reservation.find(phone_number)
             room_id = reservation[2]
+            print(f"Room ID: {room_id}")
             reservation_id = reservation[7]
+            print(f"Reservation ID: {reservation_id}")
             #actualizar la disponibilidad de la habitacion
             Room.decrease_availability(room_id)
-            check_in(reservation_id)
+            inn_reservation.check_in(reservation_id)
         elif choice == "2":
             phone_number = input("Please give your phone number: ")                      
             checkout = check_out(phone_number)

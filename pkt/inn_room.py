@@ -68,34 +68,34 @@ class Room:
                 connRoomDB.close()        
                 
     
-    def decrease_availability(self, room_id):
+    def decrease_availability(self):
         try:
             # Connect to the database
             connRoomDB = connectDB()
 
-            # Create a cursor object to execute SQL queries
-            cursor = connRoomDB.cursor()
+            # # Create a cursor object to execute SQL queries
+            # cursor = connRoomDB.cursor()
 
-            # Prepare the SQL query to decrease the availability of a room
-            query = "UPDATE rooms SET room_availability = room_availability - 1 WHERE id = %s"
-            values = (room_id,)
+            # # Prepare the SQL query to decrease the availability of a room
+            # query = "UPDATE inn_rooms SET availability = availability - 1 WHERE id = %s"
+            # values = (self,)
 
-            # Execute the query
-            cursor.execute(query, values)
+            # # Execute the query
+            # cursor.execute(query, values)
 
-            # Commit the changes to the database
-            connRoomDB.commit()
+            # # Commit the changes to the database
+            # connRoomDB.commit()
 
-            # Close the cursor and connection
-            cursor.close()
+            # # Close the cursor and connection
+            # cursor.close()
             
             if connRoomDB is not None: 
                 
                 # Create a cursor object to execute SQL queries
                 cursor = connRoomDB.cursor()                
                 # Prepare the SQL query to decrease the availability of a room
-                query = "UPDATE rooms SET availability = availability - 1 WHERE id = %s"
-                values = (self.id,)
+                query = "UPDATE inn_rooms SET availability = availability - 1 WHERE id = %s"
+                values = (self,)
 
                 # Execute the query
                 cursor.execute(query, values)
@@ -110,8 +110,7 @@ class Room:
             if cursor is not None:
                 cursor.close()
             if connRoomDB is not None:
-               connRoomDB.close()                   
-   
+                connRoomDB.close()                   
 
     def increase_availability(self):
         
