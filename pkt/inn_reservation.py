@@ -109,7 +109,7 @@ class Reservation:
         except Exception as error:
             print(f"Failed to check in customer: {error}")
             
-    def check_out(self,phone_number):
+    def check_out(self):
              
         room = Room()
                   
