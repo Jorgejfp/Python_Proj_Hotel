@@ -168,13 +168,11 @@ def menu_room():
         print("3. Back to Main Menu\n\n")               
         choice = input("Enter your choice: ")
         if choice == "1":
-            rooms = inn_room.Room.list_rooms()    
-                               
+            rooms = inn_room.Room.list_rooms()                       
         elif choice == "2":
             room_type = input("Enter room type: \n\nS: Standard\nP: Premium\nO: Ocean View\nE: Economy\n\n")
             availability = inn_room.Room.check_availability(room_type)
             print(f"Availability of {room_type} rooms: {availability}")
-            
         elif choice == "3":
             break               
         else:
@@ -198,7 +196,6 @@ def menu_reservation():
             reservation = Reservation.find(phone_number)
             room_id = reservation[2]
             reservation_id = reservation[7]
-<<<<<<< HEAD
             #Confirmar actualizar la disponibilidad de la habitacion
             print("Do you want confirm your check in? (Y/N)")
             confirm = input("Enter your choice: ")
@@ -207,33 +204,10 @@ def menu_reservation():
                 Reservation.check_in(reservation_id)
             else:
                 print("Check in canceled")
-=======
-            print(f"Reservation ID: {reservation_id}")
-            #actualizar la disponibilidad de la habitacion
-            Room.decrease_availability(room_id)
-            inn_reservation.check_in(reservation_id)
-            
->>>>>>> 1ce5a45bbb760ce4330b36096a4e4c63eb747121
         elif choice == "2":
             # Get user input for phone number
             phone_number = input("Please give your phone number:  ")              
-            reservation = Reservation.find(phone_number)
-            room_id = reservation[2]
-            checkout = reservation[6]
-            if checkout == 0:
-                print("Customer has not been checked out")
-                print("Do you want to check out the customer? (Y/N)")
-                confirm = input("Enter your choice: ")  
-                if confirm.lower() == "y":
-                    room =Room(None)
-                    #updateCheckout = Reservation.check_out(phone_number)
-                    # Increase the availability of the room and change the checkout status
-                    room.increase_availability(room_id)      
-                else:
-                    print("Customer has not been checked out. Please check out the customer before proceeding.")   
-                
-            else:
-                print("Customer has already been checked out")  
+            checkout = inn_reservation.Reservation.check_out(phone_number)  
             
         elif choice == "3":
             reservation_id = int(input("Enter the ID of the reservation you want to delete: "))
