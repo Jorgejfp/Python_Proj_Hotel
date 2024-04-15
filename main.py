@@ -140,7 +140,6 @@ def main_menu():
             break
         else:
             print("Invalid choice. Please try again.")
-
         
 
 #frm_customer = form customer
@@ -179,7 +178,7 @@ def menu_room():
         if choice == "1":
             rooms = inn_room.Room.list_rooms()                       
         elif choice == "2":
-            room_type = input("Enter room type: \n\n" "1: Standard\n" "2: Premium\n" "3: Ocean View\n" "4: Economy\n\n")
+            room_type = input("Enter room type: \n\nS: Standard\nP: Premium\nO: Ocean View\nE: Economy\n\n")
             availability = inn_room.Room.check_availability(room_type)
             print(f"Availability of {room_type} rooms: {availability}")
         elif choice == "3":
@@ -200,7 +199,14 @@ def menu_reservation():
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            check_in()
+            #find the existing reservation
+            phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
+            reservation = Reservation.find(phone_number)
+            room_id = reservation[2]
+            reservation_id = reservation[7]
+            #actualizar la disponibilidad de la habitacion
+            Room.decrease_availability(room_id)
+            check_in(reservation_id)
         elif choice == "2":
              # Get user input for phone number
             phone_number = input("Please give your phone number:  ")              
