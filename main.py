@@ -186,7 +186,7 @@ def menu_reservation():
         print("3. Delete Reservation")
         print("4. List Reservations")
         print("5. Find Reservations")
-        print("6. get total cost of reservation")
+        print("6. Get total cost of reservation")
         print("7. Back to Main Menu\n\n")
         choice = input("Enter your choice: ")
 
