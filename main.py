@@ -56,12 +56,15 @@ finally:
 
 #Definicion de funciones
 
+<<<<<<< HEAD
 def check_in():
     # Code to check in a customer
     pass
 
 
 
+=======
+>>>>>>> 9495fdc75261910b1dcb5e060101a4f49283f5f9
 def create_customer():
     print("Enter customer details:")
     # Code to create a new customer
@@ -203,10 +206,12 @@ def menu_reservation():
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = Reservation.find(phone_number)
             room_id = reservation[2]
+            print(f"Room ID: {room_id}")
             reservation_id = reservation[7]
+            print(f"Reservation ID: {reservation_id}")
             #actualizar la disponibilidad de la habitacion
             Room.decrease_availability(room_id)
-            check_in(reservation_id)
+            inn_reservation.check_in(reservation_id)
             
         elif choice == "2":
             # Get user input for phone number
@@ -219,17 +224,15 @@ def menu_reservation():
                 print("Do you want to check out the customer? (Y/N)")
                 confirm = input("Enter your choice: ")  
                 if confirm.lower() == "y":
+                    room =Room(None)
                     #updateCheckout = Reservation.check_out(phone_number)
                     # Increase the availability of the room and change the checkout status
-                    Room.increase_availability(room_id)      
+                    room.increase_availability(room_id)      
                 else:
                     print("Customer has not been checked out. Please check out the customer before proceeding.")   
                 
             else:
-                print("Customer has already been checked out")             
-            
-       
-            
+                print("Customer has already been checked out")  
             
         elif choice == "3":
             reservation_id = int(input("Enter the ID of the reservation you want to delete: "))
