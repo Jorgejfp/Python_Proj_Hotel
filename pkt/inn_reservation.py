@@ -11,7 +11,7 @@ class Reservation:
         self.customer_id = customer_id  
         self.accommodation_days = accommodation_days        
         self.checkout = None     
-        self.totalCost = self.getTotalCost()
+        self.totalCost = None #self.getTotalCost()
     
     
     #buscar el precio de la habitacion por el ID    
@@ -56,10 +56,9 @@ class Reservation:
         cursor = None
         try:
             if connReservationDB is not None:
-            
                 cursor = connReservationDB.cursor()
                 # Prepare the SQL query to retrieve the reservation              
-                query = "SELECT first_name, last_name, r.room_type, accommodation_days, room_price, cost, checkout FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id JOIN inn_rooms d ON r.room_type = d.id WHERE c.phone_number = %s"
+                query = "SELECT first_name, last_name, r.room_type, accommodation_days, room_price, cost, checkout, r.id FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id JOIN inn_rooms d ON r.room_type = d.id WHERE c.phone_number = %s"
                 # Execute the query
                 cursor.execute(query, (phone_number,))
                 # Fetch the result
@@ -67,8 +66,6 @@ class Reservation:
                 if reservation is not None:
                     print(reservation)   
                     return reservation               
-                
-                
                 else:
                     print("Reservation not found")
             else:
@@ -95,20 +92,27 @@ class Reservation:
         
             
     def check_in(self):
+        #actualizar el estado de check-in
         try:
-            # Get user input for reservation ID
-            reservation_id = input("Enter reservation ID: ")
-            # Find the existing reservation
-            reservation = Reservation.find(reservation_id)
-            if reservation:
-                # Update the checkout status of the reservation
-                reservation.changeCheckout()
-                print("Customer checked in successfully!")
-            else:
-                print("Reservation not found. Please check the reservation ID.")
-        except Exception as error:
-            print(f"Failed to check in customer: {error}")
-            
+            # Connect to the database
+            connCheckStatus = connectDB()
+            # Create a cursor object to execute SQL queries
+            cursor = connCheckStatus .cursor()
+            # Prepare the SQL query to update an existing reservation
+            query = "UPDATE inn_reservation SET checkout = %s WHERE id = %s"
+            values = (1, self)
+            # Execute the query
+            cursor.execute(query, values)
+            # Commit the changes to the database
+            connCheckStatus.commit()
+            # Close the cursor and connection
+            cursor.close()
+            connCheckStatus.close()
+        except mysql.connector.Error as error:
+            print(f"Failed to update reservation: {error}")
+
+        print("Customer checked in successfully!")
+
     def check_out(self):
         
         try:

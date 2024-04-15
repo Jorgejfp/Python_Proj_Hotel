@@ -68,7 +68,7 @@ class Room:
                 connRoomDB.close()        
                 
     
-    def decrease_availability(self):
+    def decrease_availability(self, room_id):
         try:
             # Connect to the database
             connRoomDB = connectDB()
@@ -78,7 +78,7 @@ class Room:
 
             # Prepare the SQL query to decrease the availability of a room
             query = "UPDATE rooms SET room_availability = room_availability - 1 WHERE id = %s"
-            values = (self.id,)
+            values = (room_id,)
 
             # Execute the query
             cursor.execute(query, values)
