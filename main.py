@@ -202,7 +202,7 @@ def menu_reservation():
             Room.decrease_availability(room_id)
             inn_reservation.check_in(reservation_id)
         elif choice == "2":
-             # Get user input for phone number
+            # Get user input for phone number
             phone_number = input("Please give your phone number:  ")              
             checkout = inn_reservation.Reservation.check_out(phone_number)  
             
