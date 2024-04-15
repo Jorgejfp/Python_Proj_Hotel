@@ -195,12 +195,15 @@ def menu_reservation():
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = Reservation.find(phone_number)
             room_id = reservation[2]
-            print(f"Room ID: {room_id}")
             reservation_id = reservation[7]
-            print(f"Reservation ID: {reservation_id}")
-            #actualizar la disponibilidad de la habitacion
-            Room.decrease_availability(room_id)
-            inn_reservation.check_in(reservation_id)
+            #Confirmar actualizar la disponibilidad de la habitacion
+            print("Do you want confirm your check in? (Y/N)")
+            confirm = input("Enter your choice: ")
+            if confirm.lower() == "y":
+                Room.decrease_availability(room_id)
+                Reservation.check_in(reservation_id)
+            else:
+                print("Check in canceled")
         elif choice == "2":
             # Get user input for phone number
             phone_number = input("Please give your phone number:  ")              
@@ -226,7 +229,6 @@ def menu_reservation():
             break
         else:
             print("Invalid choice. Please try again.")
-            
 if __name__ == "__main__":
     main_menu()
 
