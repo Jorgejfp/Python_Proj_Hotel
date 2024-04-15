@@ -113,17 +113,17 @@ class Reservation:
         print("Customer checked in successfully!") 
         
     def check_out(self):
-        connReservationDB = connectDB()
+        connCheckStatus = connectDB()
         cursor = None
         try:
-            if connReservationDB is not None:
-                cursor = connReservationDB.cursor()
+            if connCheckStatus is not None:
+                cursor = connCheckStatus.cursor()
                 # Prepare the SQL query to update the checkout status of a reservation
-                query = "UPDATE inn_reservation SET checkout = 1, availability = availability +1  WHERE phonenumber = %s"
-                values = (1,self.phonenumber,)
+                query = "UPDATE inn_reservation SET checkout =%s WHERE id =%s"
+                values = (1,self)
                 cursor.execute(query, values)
                 # Commit the changes to the database
-                connReservationDB.commit()
+                connCheckStatus.commit()
                 print("Customer checked out successfully!")
             else:
                 print("Connection to database failed")  
@@ -132,8 +132,8 @@ class Reservation:
         finally:
             if cursor is not None:
                 cursor.close()
-            if connReservationDB is not None:
-                connReservationDB.close()
+            if connCheckStatus is not None:
+                connCheckStatus.close()
                 
     def create_reservation(self):
             try:

@@ -204,10 +204,23 @@ def menu_reservation():
                 Reservation.check_in(reservation_id)
             else:
                 print("Check in canceled")
+                
         elif choice == "2":
             # Get user input for phone number
-            phone_number = input("Please give your phone number:  ")              
-            checkout = inn_reservation.Reservation.check_out(phone_number)  
+            phone_number = int(input("Please give your phone number:  "))
+            reservation = Reservation.find(phone_number)
+            room_id = reservation[2]
+            checkout = reservation[6]
+            reservation_id = reservation[7]  
+            if checkout == 0:
+                print("Customer has not checked in yet")
+                print("Do you want to check in? (Y/N)")
+                confirm = input("Enter your choice: ")
+                if confirm.lower() == "y":
+                    Room.increase_availability(room_id)
+                    Reservation.check_out(reservation_id)         
+            else:
+                print ("Customer with phone number: has already checked out")
             
         elif choice == "3":
             reservation_id = int(input("Enter the ID of the reservation you want to delete: "))

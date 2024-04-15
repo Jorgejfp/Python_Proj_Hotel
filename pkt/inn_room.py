@@ -112,7 +112,7 @@ class Room:
             if connRoomDB is not None:
                 connRoomDB.close()                   
 
-    def increase_availability(self, room_id):
+    def increase_availability(self):
         
         connRoomDB = connectDB()
         cursor = None
@@ -123,8 +123,8 @@ class Room:
                 # Create a cursor object to execute SQL queries
                 cursor = connRoomDB.cursor()
                 # Prepare the SQL query to increase the availability of a room
-                query = "UPDATE inn_rooms SET availability = availability + 1, checkout = 1 WHERE id = %s"
-                values = (room_id,)
+                query = "UPDATE inn_rooms SET availability = availability + 1 WHERE id = %s"
+                values = (self,)
 
                 # Execute the query
                 cursor.execute(query, values)
