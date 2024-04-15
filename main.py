@@ -56,15 +56,6 @@ finally:
 
 #Definicion de funciones
 
-<<<<<<< HEAD
-def check_in():
-    # Code to check in a customer
-    pass
-
-
-
-=======
->>>>>>> 9495fdc75261910b1dcb5e060101a4f49283f5f9
 def create_customer():
     print("Enter customer details:")
     # Code to create a new customer
