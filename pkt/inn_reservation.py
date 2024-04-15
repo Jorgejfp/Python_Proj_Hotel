@@ -94,24 +94,6 @@ class Reservation:
     def check_in(self):
         #actualizar el estado de check-in
         try:
-<<<<<<< HEAD
-            # Get user input for reservation ID
-            reservation_id = input("Enter reservation ID: ")
-            # Find the existing reservation
-            reservation = Reservation.find(reservation_id)
-            if reservation:
-                # Update the checkout status of the reservation
-                reservation.changeCheckout()
-                print("Customer checked in successfully!")
-            else:
-                print("Reservation not found. Please check the reservation ID.")
-        except Exception as error:
-            print(f"Failed to check in customer: {error}")
-            
-    def check_out(self, phone_number):            
-                    
-               
-=======
             # Connect to the database
             connCheckStatus = connectDB()
             # Create a cursor object to execute SQL queries
@@ -129,39 +111,30 @@ class Reservation:
         except mysql.connector.Error as error:
             print(f"Failed to update reservation: {error}")
 
-        print("Customer checked in successfully!")
-
+        print("Customer checked in successfully!") 
+        
     def check_out(self):
-             
-        room = Room()
-                  
-        # Get user input for phone number
-        phone_number = input("Please give your phone number:  ")
->>>>>>> 59e9c9aee6a4286f41daca06419fda2a4135a23d
-        # Find the existing reservation
-        reservation = Reservation.find(phone_number)
-        if reservation is not None:
-            checkout = reservation[6]
-            room_type = reservation[2]
-           
-            room.availability = room.check_availability(room_type)
-            if checkout == 0:
-                print("Customer has not been checked out")
+        connReservationDB = connectDB()
+        cursor = None
+        try:
+            if connReservationDB is not None:
+                cursor = connReservationDB.cursor()
+                # Prepare the SQL query to update the checkout status of a reservation
+                query = "UPDATE inn_reservation SET checkout = 1, availability = availability +1  WHERE phonenumber = %s"
+                values = (1,self.phonenumber,)
+                cursor.execute(query, values)
+                # Commit the changes to the database
+                connReservationDB.commit()
+                print("Customer checked out successfully!")
             else:
-                #aumenta a 1
-                room.increase_availability(room_type)
-                print("Customer has been checked out succefully!")
-                print("Your invoice information is: \n\n Name: ", reservation[0], reservation[1], "\n Accommodation days: ", reservation[3], "\n Room Type: ", reservation[2],  "\n Total Cost: ", reservation[5])
-        else:   
-            print("Phone number not found. Please check phone number.")  
-            
-                
-         
-                    
-                    
-                  
-             
-                
+                print("Connection to database failed")  
+        except Exception as e:
+            print(f"Failed to check out customer: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connReservationDB is not None:
+                connReservationDB.close()
                 
     def create_reservation(self):
             try:

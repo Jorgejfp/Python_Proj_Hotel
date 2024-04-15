@@ -124,7 +124,7 @@ class Room:
                 # Create a cursor object to execute SQL queries
                 cursor = connRoomDB.cursor()
                 # Prepare the SQL query to increase the availability of a room
-                query = "UPDATE rooms SET availability = availability + 1, check_out = 1 WHERE id = %s"
+                query = "UPDATE inn_rooms SET availability = availability + 1, checkout = 1 WHERE id = %s"
                 values = (self.id,)
 
                 # Execute the query
