@@ -110,9 +110,10 @@ class Reservation:
         except mysql.connector.Error as error:
             print(f"Failed to update reservation: {error}")
 
-        print("Customer checked in successfully!")
-
+        print("Customer checked in successfully!") 
+        
     def check_out(self):
+<<<<<<< HEAD
         room = Room()
         # Get user input for phone number
         phone_number = input("Please give your phone number:  ")
@@ -133,6 +134,30 @@ class Reservation:
             print("Phone number not found. Please check phone number.")  
             
             
+=======
+        connReservationDB = connectDB()
+        cursor = None
+        try:
+            if connReservationDB is not None:
+                cursor = connReservationDB.cursor()
+                # Prepare the SQL query to update the checkout status of a reservation
+                query = "UPDATE inn_reservation SET checkout = 1, availability = availability +1  WHERE phonenumber = %s"
+                values = (1,self.phonenumber,)
+                cursor.execute(query, values)
+                # Commit the changes to the database
+                connReservationDB.commit()
+                print("Customer checked out successfully!")
+            else:
+                print("Connection to database failed")  
+        except Exception as e:
+            print(f"Failed to check out customer: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connReservationDB is not None:
+                connReservationDB.close()
+                
+>>>>>>> 1ce5a45bbb760ce4330b36096a4e4c63eb747121
     def create_reservation(self):
             try:
                 # Get user input for reservation details
