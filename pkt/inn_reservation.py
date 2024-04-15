@@ -109,17 +109,16 @@ class Reservation:
         except Exception as error:
             print(f"Failed to check in customer: {error}")
             
-    def check_out(self):
-             
-        room = Room()
-                  
-        # Get user input for phone number
-        phone_number = input("Please give your phone number:  ")
+    def check_out(self, phone_number):            
+                    
+               
         # Find the existing reservation
-        reservation = Reservation.Find(phone_number)
+        reservation = Reservation.find(phone_number)
         if reservation is not None:
             checkout = reservation[6]
             room_type = reservation[2]
+           
+            room.availability = room.check_availability(room_type)
             if checkout == 0:
                 print("Customer has not been checked out")
             else:
