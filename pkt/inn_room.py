@@ -89,20 +89,12 @@ class Room:
             # Close the cursor and connection
             cursor.close()
             
-
-            print("Room availability decreased successfully!")
-        except mysql.connector.Error as error:
-                    print(f"Failed to decrease room availability: {error}")
-
-    def increase_availability(self):
-            try:
-                # Connect to the database
-                connRoomDB = connectDB()
-
+            if connRoomDB is not None: 
+                
                 # Create a cursor object to execute SQL queries
-                cursor = connRoomDB.cursor()
-                # Prepare the SQL query to increase the availability of a room
-                query = "UPDATE rooms SET room_availability = room_availability + 1 WHERE id = %s"
+                cursor = connRoomDB.cursor()                
+                # Prepare the SQL query to decrease the availability of a room
+                query = "UPDATE rooms SET availability = availability - 1 WHERE id = %s"
                 values = (self.id,)
 
                 # Execute the query
@@ -110,14 +102,46 @@ class Room:
 
                 # Commit the changes to the database
                 connRoomDB.commit()
-
-                # Close the cursor and connection
+            else:
+                print("Connection to database failed")   
+        except Exception as e:
+            print(f"Failed to decrease room availability:: {e}")
+        finally:
+            if cursor is not None:
                 cursor.close()
-            
+            if connRoomDB is not None:
+               connRoomDB.close()                   
+   
 
-                print("Room availability increased successfully!")
-            except mysql.connector.Error as error:
-                        print(f"Failed to increase room availability: {error}")
+    def increase_availability(self):
+        
+        connRoomDB = connectDB()
+        cursor = None
+        try:
+            
+            if connRoomDB is not None: 
+            
+                # Create a cursor object to execute SQL queries
+                cursor = connRoomDB.cursor()
+                # Prepare the SQL query to increase the availability of a room
+                query = "UPDATE rooms SET availability = availability + 1, check_out = 1 WHERE id = %s"
+                values = (self.id,)
+
+                # Execute the query
+                cursor.execute(query, values)
+
+                # Commit the changes to the database
+                connRoomDB.commit()       
+                        
+            else:
+                print("Connection to database failed")   
+        except Exception as e:
+            print(f"Failed to increcrease room availability:: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if connRoomDB is not None:
+               connRoomDB.close()  
                     
     def get_total_available_rooms():
         try:

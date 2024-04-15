@@ -208,7 +208,9 @@ def menu_reservation():
             Room.decrease_availability(room_id)
             check_in(reservation_id)
         elif choice == "2":
-            check_out()
+            phone_number = input("Please give your phone number: ")                      
+            checkout = check_out(phone_number)
+            
         elif choice == "3":
             reservation_id = int(input("Enter the ID of the reservation you want to delete: "))
             reservationDelete = inn_reservation.Reservation.delete_reservation_by_id(reservation_id)

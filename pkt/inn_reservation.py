@@ -114,21 +114,33 @@ class Reservation:
         print("Customer checked in successfully!")
 
     def check_out(self):
-        
-        try:
-            
-            # Get user input for reservation ID
-            reservation_id = input("Enter reservation ID: ")
-            # Find the existing reservation
-            reservation = Reservation.Find(reservation_id)
-            if reservation:
-                # Update the check-out status of the reservation
-                reservation.checkout = 1  # Suponiendo que 1 representa el estado de check-out
-                print("Customer checked out successfully!")
+             
+        room = Room()
+                  
+        # Get user input for phone number
+        phone_number = input("Please give your phone number:  ")
+        # Find the existing reservation
+        reservation = Reservation.Find(phone_number)
+        if reservation is not None:
+            checkout = reservation[6]
+            room_type = reservation[2]
+            if checkout == 0:
+                print("Customer has not been checked out")
             else:
-                print("Reservation not found. Please check the reservation ID.")
-        except Exception as error:
-            print(f"Failed to check out customer: {error}")
+                #aumenta a 1
+                room.increase_availability(room_type)
+                print("Customer has been checked out succefully!")
+                print("Your invoice information is: \n\n Name: ", reservation[0], reservation[1], "\n Accommodation days: ", reservation[3], "\n Room Type: ", reservation[2],  "\n Total Cost: ", reservation[5])
+        else:   
+            print("Phone number not found. Please check phone number.")  
+            
+                
+         
+                    
+                    
+                  
+             
+                
                 
     def create_reservation(self):
             try:
