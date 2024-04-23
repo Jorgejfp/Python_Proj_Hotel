@@ -65,8 +65,12 @@ class Customer:
                     cursor.execute(query)
                     # Fetch all the rows returned by the query
                     customers = cursor.fetchall()
+                    print("\nCustomer Details:\n")
+                    print("{:<10} {:<15} {:<15} {:<30} {:<15}".format("ID", "First Name", "Last Name", "Email", "Phone Number"))
                     for customer in customers:
-                        print(customer) # Print each customer record
+                        Customer.print_customer_details(customer)
+                        #print(customer) # Print each customer record
+                    input("\nPress Enter to continue...")
             else:
                 print("Error: Could not connect to database")
         except Exception as e:
@@ -139,9 +143,6 @@ class Customer:
             if connCustomerDB is not None:
                 connCustomerDB.close()
                 
-    def print_customer_details(self):
-        #print("Customer ID:", self.id)
-        print("First Name:", self.first_name)
-        print("Last Name:", self.last_name)
-        print("Email:", self.email)
-        print("Phone Number:", self.phone_number)
+    @staticmethod            
+    def print_customer_details(customer):
+        print("{:<10} {:<15} {:<15} {:<30} {:<15}".format(*customer))

@@ -3,7 +3,7 @@ from pkt.inn_customer import Customer
 from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
-
+import os
 '''
 
 #conectar a la base de datos
@@ -15,7 +15,7 @@ try:
         try:
                 with open("reservation_file.txt", "r") as f1:
                     cursor = connection.cursor()
-                   
+                
 
                     for line in f1.readlines():
                         data = line.strip().split(",")
@@ -31,18 +31,17 @@ try:
                     
                         #inserta datos en la tabla reservation
                         cursor.execute("INSERT INTO inn_reservation (customer_id, room_id, reservation_duration) VALUES (%s, %s, %s)", 
-                                       (customer_id, room_id, reservation_duration))    
+                                    (customer_id, room_id, reservation_duration))    
                         # Commit para confirmar las transacciones en la base de datos
                         connection.commit()
                         
                     print("Datos de reserva insertados correctamente en la base de datos")   
                     
-                       
-         
+                
 
         except FileNotFoundError:
                 print("El archivo reservation_file.txt no se ha encontrado.")
-                 
+                
 except connectDB.Error as error:
     print(f"Error al conectar la base de datos: {error}")
     
@@ -105,11 +104,22 @@ def update_customer():
 
 
 # Definition of Main Menu
+def print_header(menu_name):
+    clear_screen()
+    print("*" * 77)
+    print("*" + " " * 24 + "Welcome to the LIRS System" + " " * 25 + "*")
+    print("*" * 77)
+    print("Please enter a number related to the following options to continue:")
+    print("-" * 77)
+    print("{:^77}".format("Options of " + menu_name + " Menu"))
+    print("-" * 77)
 
-
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
 def main_menu():
     while True:
-        print("\n\nWelcome to Pacific Inn Reservation System\n\n")
+        print_header("Main Menu")
         print("1. Menu Customer")
         print("2. Menu Room")
         print("3. Menu Reservation")
@@ -135,9 +145,19 @@ def main_menu():
         
 
 #frm_customer = form customer
+def print_header(menu_name):
+    clear_screen()
+    print("*" * 77)
+    print("*" + " " * 24 + "Welcome to the LIRS System" + " " * 25 + "*")
+    print("*" * 77)
+    print("Please enter a number related to the following options to continue:")
+    print("-" * 77)
+    print("{:^77}".format("Options of " + menu_name + " Menu"))
+    print("-" * 77)
+    
 def menu_customers():
     while True:
-        print("\n\nCustomer Menu\n\n")
+        print_header("Customer")
         print("1. Create Customer")
         print("2. Update Customer")
         print("3. Delete Customer")
@@ -160,19 +180,31 @@ def menu_customers():
         else:
             print("Invalid choice. Please try again.")
 
+def print_header(menu_name):
+    clear_screen()
+    print("*" * 77)
+    print("*" + " " * 24 + "Welcome to the LIRS System" + " " * 25 + "*")
+    print("*" * 77)
+    print("Please enter a number related to the following options to continue:")
+    print("-" * 77)
+    print("{:^77}".format("Options of " + menu_name + " Menu"))
+    print("-" * 77)
+    
 def menu_room():
     while True:
-        print("Room Menu\n\n")
+        print_header("Room")
         print("1. List Rooms")
         print("2. check availability")
         print("3. Back to Main Menu\n\n")               
         choice = input("Enter your choice: ")
         if choice == "1":
-            rooms = inn_room.Room.list_rooms()                       
+            rooms = inn_room.Room.list_rooms()
+            input("\nPress Enter to continue...")                       
         elif choice == "2":
-            room_type = input("Enter room type: \n\nS: Standard\nP: Premium\nO: Ocean View\nE: Economy\n\n")
+            room_type = input("Rooms type: \n\nS: Standard\nP: Premium\nO: Ocean View\nE: Economy\n\nEnter room type: ")
             availability = inn_room.Room.check_availability(room_type)
             print(f"Availability of {room_type} rooms: {availability}")
+            input("\nPress Enter to continue...")
         elif choice == "3":
             break               
         else:
@@ -180,7 +212,7 @@ def menu_room():
             
 def menu_reservation():
     while True:
-        print("\n\nReservation Menu\n\n")
+        print_header("Reservation")
         print("1. Check-in")
         print("2. Chek-out")
         print("3. Delete Reservation")
@@ -238,10 +270,12 @@ def menu_reservation():
             print(f"Cost of Room: {cost_room}")
             print(f"Number of days: {num_days}")
             print(f"Total cost of reservation: {num_days * cost_room}")        
+            input("\nPress Enter to continue...")
         elif choice == "7":
             break
         else:
             print("Invalid choice. Please try again.")
 if __name__ == "__main__":
     main_menu()
+
 
