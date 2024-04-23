@@ -40,25 +40,21 @@ class Room:
         cursor = None
         try:
             if connRoomDB is not None:
-                
                 # Create a cursor object to execute SQL queries
                 cursor = connRoomDB.cursor()
-
                 # Prepare the SQL query to retrieve all rooms
                 query = "SELECT * FROM inn_rooms"
-
                 # Execute the query
                 cursor.execute(query)
-
                 # Fetch all the results
                 rooms = cursor.fetchall()
-
                 #Display the results
+                print("List of rooms:")
+                print("{:<10} {:<10} {:<10} {:<10}".format("ID", "Room Type", "Price", "Availability"))
                 for room in rooms:
-                    print(room)                  
+                    Room.print_room_details(room)                  
             else:
                 print("Connection to database failed")
-        
         except Exception as e:
             print(f"Failed to list rooms: {e}")
         finally:
@@ -135,12 +131,12 @@ class Room:
             else:
                 print("Connection to database failed")   
         except Exception as e:
-            print(f"Failed to increcrease room availability:: {e}")
+            print(f"Failed to increase room availability:: {e}")
         finally:
             if cursor is not None:
                 cursor.close()
             if connRoomDB is not None:
-               connRoomDB.close()  
+                connRoomDB.close()  
                     
     def get_total_available_rooms():
         try:
@@ -161,7 +157,7 @@ class Room:
 
             # Close the cursor and connection
             cursor.close()
-          
+        
 
             return total_available_rooms
         except mysql.connector.Error as error:
@@ -193,7 +189,7 @@ class Room:
                     print("there is no availability for this room type")
             else:
                 print("Connection to database failed")
-             
+            
         except Exception as e:
                 print(f"Failed to check room availability: {e}")
         finally:
@@ -201,7 +197,10 @@ class Room:
                 cursor.close()
             if connRoomDB is not None:
                 connRoomDB.close()
-           
-                
+        
+    @staticmethod
+    def print_room_details(room):
+        print("{:<10} {:<10} {:<10} {:<10}".format(*room))
+            
                     
-           
+            
