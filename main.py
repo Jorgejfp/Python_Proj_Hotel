@@ -19,7 +19,7 @@ try:
 
                     for line in f1.readlines():
                         data = line.strip().split(",")
-                        accommodation days = data[5]  # The duration of the reservation is in the last position of the data
+                        accommodation_days = data[5]  # The duration of the reservation is in the last position of the data
 
                         # Create a new Customer object with the data from lines position 0, 1, 2, 3
                         cursor.execute("INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)", (data[0], data[1], data[2], data[3]))
@@ -31,7 +31,7 @@ try:
                     
                         #Insert data into the reservation table
                         cursor.execute("INSERT INTO inn_reservation (room_type, customer_id, accommodation_days) VALUES (%s, %s, %s)", 
-                                    (room_type, customer_id, reservation_duration))    
+                                    (room_type, customer_id, accommodation_days))    
                         # Commit to confirm the transactions in the database.
                         connection.commit()
                         
