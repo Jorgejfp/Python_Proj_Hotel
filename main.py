@@ -37,12 +37,11 @@ try:
                         
                     print("Datos de reserva insertados correctamente en la base de datos")   
                     
-                       
-         
+                
 
         except FileNotFoundError:
                 print("El archivo reservation_file.txt no se ha encontrado.")
-                 
+                
 except connectDB.Error as error:
     print(f"Error al conectar la base de datos: {error}")
     
