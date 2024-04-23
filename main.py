@@ -11,7 +11,7 @@ try:
     connection = connectDB.connect()
     
     if connection.is_connected():
-        print("Conexión a la base de datos establecida")
+        print("Database connection established")
         try:
                 with open("reservation_file.txt", "r") as f1:
                     cursor = connection.cursor()
@@ -19,38 +19,38 @@ try:
 
                     for line in f1.readlines():
                         data = line.strip().split(",")
-                        reservation_duration = data[5]  # Suponiendo que la duración de la reserva está en la última posición de los datos
+                        accommodation days = data[5]  # The duration of the reservation is in the last position of the data
 
-                        # Crear un nuevo objeto Customer con los datos de la línea posicion 0,1,2,3
+                        # Create a new Customer object with the data from lines position 0, 1, 2, 3
                         cursor.execute("INSERT INTO inn_customer (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)", (data[0], data[1], data[2], data[3]))
                         
-                        #busca al ultimo Id agregado                        
+                        #Search for the last added ID                        
                         customer_id = cursor.lastrowid
-                        # buscar el ID asociado al tipo de habitacion
-                        room_id = Room.getID(data[4])
+                        # Search for the ID associated with the room type
+                        room_type = Room.getID(data[4])
                     
-                        #inserta datos en la tabla reservation
-                        cursor.execute("INSERT INTO inn_reservation (customer_id, room_id, reservation_duration) VALUES (%s, %s, %s)", 
-                                    (customer_id, room_id, reservation_duration))    
-                        # Commit para confirmar las transacciones en la base de datos
+                        #Insert data into the reservation table
+                        cursor.execute("INSERT INTO inn_reservation (room_type, customer_id, accommodation_days) VALUES (%s, %s, %s)", 
+                                    (room_type, customer_id, reservation_duration))    
+                        # Commit to confirm the transactions in the database.
                         connection.commit()
                         
-                    print("Datos de reserva insertados correctamente en la base de datos")   
+                    print("Reservation data successfully inserted into the database")   
                     
                 
 
         except FileNotFoundError:
-                print("El archivo reservation_file.txt no se ha encontrado.")
+                print("The reservation_file.txt file was not found.")
                 
 except connectDB.Error as error:
-    print(f"Error al conectar la base de datos: {error}")
+    print(f"Error connecting to the database: {error}")
     
 finally:
-    #connectDB.close()
-    if connectDB.is_connected():
+   
+    if connection.is_connected():
         cursor.close()
-        connectDB.close()
-        print("Conexión a la base de datos cerrada")
+        connection.close()
+        print("Database connection closed")
 '''
 
 #Definicion de funciones
