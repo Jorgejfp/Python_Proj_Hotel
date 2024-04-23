@@ -8,7 +8,7 @@ class Room:
             self.room_price = room_price
             self.availability = availability
             
-    def getID(self, room_type):
+    def getID(room_type):
         try:
             # Connect to the database
             connRoomDB = connectDB()
@@ -24,12 +24,12 @@ class Room:
             cursor.execute(query, values)
 
             # Fetch the result
-            room_id = cursor.fetchone()[0]
+            room_type = cursor.fetchone()[0]
 
             # Close the cursor and connection
             cursor.close()
 
-            return room_id
+            return room_type
         except mysql.connector.Error as error:
             print(f"Failed to get room ID: {error}")
             return None

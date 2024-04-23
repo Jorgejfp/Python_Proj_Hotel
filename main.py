@@ -1,14 +1,15 @@
+from mysql.connector import Error as MySQLError
 from pkt import inn_customer, inn_room, inn_reservation
 from pkt.inn_customer import Customer
 from pkt.inn_room import Room
 from pkt.inn_reservation import Reservation
 from pkt.connection import connectDB
 import os
-'''
+
 
 #conectar a la base de datos
 try:
-    connection = connectDB.connect()
+    connection = connectDB()
     
     if connection.is_connected():
         print("Database connection established")
@@ -42,7 +43,7 @@ try:
         except FileNotFoundError:
                 print("The reservation_file.txt file was not found.")
                 
-except connectDB.Error as error:
+except MySQLError as error:
     print(f"Error connecting to the database: {error}")
     
 finally:
@@ -51,7 +52,7 @@ finally:
         cursor.close()
         connection.close()
         print("Database connection closed")
-'''
+
 
 #Definicion de funciones
 
