@@ -38,6 +38,8 @@ try:
                         
                     print("Reservation data successfully inserted into the database")   
                     
+                    # Remove the file after reading
+                    #os.remove("reservation_file.txt")
                 
 
         except FileNotFoundError:
@@ -262,7 +264,8 @@ def menu_reservation():
             reservations = inn_reservation.Reservation.list_reservations()       
         elif choice == "5":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
-            reservation = inn_reservation.Reservation.find(phone_number)           
+            reservation = inn_reservation.Reservation.find(phone_number)  
+            input("\nPress Enter to continue...")              
         elif choice == "6":
             phone_number= int(input("Enter the phone Number of the reservation you want to find: "))
             reservation = inn_reservation.Reservation.find(phone_number)
