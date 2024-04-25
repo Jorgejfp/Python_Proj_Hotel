@@ -38,8 +38,9 @@ try:
                         
                     print("Reservation data successfully inserted into the database")   
                     
-                    # Remove the file after reading
-                    #os.remove("reservation_file.txt")
+                    #Remove the file after reading
+                f1.close()  
+                os.remove("reservation_file.txt")     
                 
 
         except FileNotFoundError:
