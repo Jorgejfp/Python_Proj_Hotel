@@ -81,7 +81,7 @@ def update_customer():
     if customer:
         # Print customer details
         print("\nCustomer Details:")
-        customer.print_customer_details()
+        customer.print_customer_details2()
         
         # Prompt the user to enter updated information
         first_name = input("\nEnter updated first name: ")
