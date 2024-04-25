@@ -61,11 +61,13 @@ class Reservation:
                 query = "SELECT first_name, last_name, r.room_type, accommodation_days, room_price, cost, checkout, r.id FROM inn_reservation r JOIN inn_customer c ON r.customer_id = c.id JOIN inn_rooms d ON r.room_type = d.id WHERE c.phone_number = %s"
                 # Execute the query
                 cursor.execute(query, (phone_number,))
-                # Fetch the result
-                reservation = cursor.fetchone()
-                if reservation is not None:
-                    #print(reservation)   
-                    return reservation               
+                # Fetch the results
+                reservations = cursor.fetchall()
+                if reservations:
+                    print("\nReservation Details:\n")
+                    print("{:<10} {:<15} {:<15} {:<30} {:<15} {:<15} ".format("ID", "Room Type", "Customer ID", "Accomodation Days", "Cost", "Checkout"))
+                    for reservation in reservations:
+                        Reservation.print_customer_details2(reservation)
                 else:
                     print("Reservation not found")
             else:
@@ -76,7 +78,8 @@ class Reservation:
             if cursor is not None:
                 cursor.close()
             if connReservationDB is not None:
-                connReservationDB.close()        
+                connReservationDB.close()
+        input("\nPress Enter to continue...")
             
     def printReservation(self):
         print(f"Reservation ID: {self.id}")
@@ -184,7 +187,6 @@ class Reservation:
             except Exception as error:
                 print(f"Failed to delete reservation: {error}")
                 
-    #esta lista y funcionando       
     def list_reservations():
         # Connect to the database
         connReservationDB = connectDB()
@@ -200,8 +202,11 @@ class Reservation:
                 # Fetch all the results
                 reservations = cursor.fetchall()
                 # Display the results
+                print("\Reservation Details:\n")
+                print("{:<10} {:<15} {:<15} {:<30} {:<15} {:<15} ".format("ID", "Room Type", "Customer ID", "Accomodation Days", "Cost", "Checkout"))
                 for reservation in reservations:
-                    print(reservation)
+                    if reservation is not None:
+                        Reservation.print_customer_details(reservation)
             else:
                 print("Connection to database failed")               
         except Exception as e:
@@ -211,7 +216,9 @@ class Reservation:
                 cursor.close()
             if connReservationDB is not None:
                 connReservationDB.close()   
-    
+        input("\nPress Enter to continue...")
+                
+                
     def save_dbReservation(self):
         # Connect to the database
         connReservationDB = None
@@ -277,3 +284,12 @@ class Reservation:
                 connection.close()
             except mysql.connector.Error as error:
                 print(f"Failed to delete reservation: {error}")
+                
+    @staticmethod
+    def print_customer_details(reservation):
+        print("{:<10} {:<15} {:<15} {:<30} ".format(*reservation[:4]))
+        
+    @staticmethod
+    def print_customer_details2(reservation):
+        reservation_id, room_type, customer_id, accommodation_days, room_price, cost, checkout, _ = reservation
+        print("{:<10} {:<15} {:<15} {:<30} {:<15} {:<15} ".format(reservation_id, room_type, customer_id, accommodation_days, cost if cost is not None else "N/A", "Checked Out" if checkout else "Checked In"))
